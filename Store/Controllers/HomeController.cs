@@ -18,15 +18,6 @@ namespace Store.Controllers
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                kasutaja kas = new kasutaja();
-                kas.Nimi = "admin";
-                kas.telefon = "+372534653";
-                kas.salasona = "admin";
-                kas.istenindaja = false;
-                kas.Perenimi = "test";
-                kas.epost = "test@gmail.com";
-                db.kasutajad.Add(kas);
-                db.SaveChanges();
             };
 
         }
