@@ -1,13 +1,13 @@
-﻿@model IEnumerable<Store.Models.kasutaja>
+﻿@model IEnumerable<Store.Models.klient>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "klientid tabel";
 }
 
-<h1>Index</h1>
+<h1>klientid</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Loo uus</a>
 </p>
 <table class="table">
     <thead>
@@ -25,10 +25,7 @@
                 @Html.DisplayNameFor(model => model.epost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.istenindaja)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.salasona)
+                @Html.DisplayNameFor(model => model.aeg)
             </th>
             <th></th>
         </tr>
@@ -49,15 +46,12 @@
                 @Html.DisplayFor(modelItem => item.epost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.istenindaja)
+                @Html.DisplayFor(modelItem => item.aeg)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.salasona)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Muuda</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Detaalid</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Kustuta</a>
             </td>
         </tr>
 }

@@ -2,14 +2,14 @@
 {
     public class loom
     {
-        int ID { get; set; }
-        string Nimi { get; set; }
-        string sugu { get; set; }
-        string tervis { get; set; }
-        string viilatüüp { get; set; }
-        bool iseloomu { get; set; }
-        int vanus { get; set; }
-        klient omanik { get; set; }
+        public int ID { get; set; }
+        public string Nimi { get; set; }
+        public string sugu { get; set; }
+        public string tervis { get; set; }
+        public string viilatüüp { get; set; }
+        public bool iseloomu { get; set; }
+        public int vanus { get; set; }
+        public klient omanik { get; set; }
     }
 
 }

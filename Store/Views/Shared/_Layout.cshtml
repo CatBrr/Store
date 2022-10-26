@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Store</title>
+    <title>@ViewData["Title"] - PetCare</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Store.styles.css" asp-append-version="true" />
@@ -25,9 +25,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Umbes</a>
                         </li>
-                        <!--<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="kasutajas" asp-action="Index">kasutajad</a>
-                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Index">kliendit</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -42,7 +42,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Store - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - PetCare DariaEvtina - <a asp-area="" asp-controller="Home" asp-action="About">Umbes</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

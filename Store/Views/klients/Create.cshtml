@@ -1,12 +1,12 @@
-﻿@model Store.Models.kasutaja
+﻿@model Store.Models.klient
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Loo uus klient";
 }
 
-<h1>Create</h1>
+<h1>Loo uus</h1>
 
-<h4>kasutaja</h4>
+<h4>klient</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -32,15 +32,10 @@
                 <input asp-for="epost" class="form-control" />
                 <span asp-validation-for="epost" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="istenindaja" /> @Html.DisplayNameFor(model => model.istenindaja)
-                </label>
-            </div>
             <div class="form-group">
-                <label asp-for="salasona" class="control-label"></label>
-                <input asp-for="salasona" class="form-control" />
-                <span asp-validation-for="salasona" class="text-danger"></span>
+                <label asp-for="aeg" class="control-label"></label>
+                <input asp-for="aeg" class="form-control" />
+                <span asp-validation-for="aeg" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -50,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Pärast nimekirja</a>
 </div>
 
 @section Scripts {

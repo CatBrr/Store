@@ -19,9 +19,9 @@ namespace Store.Controllers
             using (ApplicationContext db = new ApplicationContext())
             {
                 kasutaja kas = new kasutaja();
-                kas.Nimi = "test";
+                kas.Nimi = "admin";
                 kas.telefon = "+372534653";
-                kas.salasona = "test";
+                kas.salasona = "admin";
                 kas.istenindaja = false;
                 kas.Perenimi = "test";
                 kas.epost = "test@gmail.com";
@@ -32,6 +32,7 @@ namespace Store.Controllers
         }
         public IActionResult Index()
         {
+            database();
             return View();
         }
 

@@ -2,16 +2,16 @@
 {
     public class master
     {
-        int ID { get; set; }
-        string Nimi { get; set; }
-        string Perenimi { get; set; }
-        string telefon { get; set; }
-        string epost { get; set; }
-        loom loom { get; set; }
-        public teenust[] teenused = new teenust[] { };
-        public DateTime[] bron = new DateTime[] { };
-        public klient[] klientid = new klient[] { };
-        public keel[] keelid = new keel[] { };
+        public int ID { get; set; }
+        public string Nimi { get; set; }
+        public string Perenimi { get; set; }
+        public string telefon { get; set; }
+        public string epost { get; set; }
+        public loom loom { get; set; }
+        public teenust[] teenused { get; set; }
+        public DateTime bron { get; set; }
+        public klient[] klientid { get; set; }
+        public keel[] keelid { get; set; }
 
     }
 }
