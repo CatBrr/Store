@@ -17,19 +17,20 @@ namespace Store.Models
         [EmailAddress]
         [Display(Name = "e-post")]
         public string epost { get; set; }
-        public int loomId { get; set; }
         [Required]
         [Display(Name = "muu loomad")]
+        public int loomId { get; set; }
         public loom loomad  { get; set; }
         [Required]
         [Display(Name = "vali master")]
+        public int masterId { get; set; }
         public master master { get; set; }
         [Required]
         [Display(Name = "broneerida eag")]
         public DateTime aeg { get; set; }
-        public int teenustId { get; set; }
         [Required]
         [Display(Name = "vali teenused")]
+        public int teenustId { get; set; }
         public teenust teenused { get; set; }
     }
 }

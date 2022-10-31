@@ -23,12 +23,11 @@ namespace Store.Models
         [Display(Name = "salasõna")]
         public string salasona { get; set; }
         public int teenustId { get; set; }
-        public List<teenust> teenused { get; set; }
+        public teenust teenused { get; set; }
         public DateTime bron { get; set; }
-        public int klientId { get; set; }
-        public List<klient> klientid { get; set; }
-        public int keeltId { get; set; }
-        public List<keel> keelid { get; set; }
+        public klient klientid { get; set; }
+        public int keelId { get; set; }
+        public keel keelid { get; set; }
 
 
     }

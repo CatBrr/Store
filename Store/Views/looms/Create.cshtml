@@ -1,10 +1,10 @@
 ﻿@model Store.Models.loom
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Loo uus";
 }
 
-<h1>Create</h1>
+<h1>Loo uus</h1>
 
 <h4>loom</h4>
 <hr />
@@ -19,25 +19,33 @@
             </div>
             <div class="form-group">
                 <label asp-for="suguId" class="control-label"></label>
-                <select asp-for="suguId" class="form-control" asp-items="ViewBag.viilatuupId"></select>
+                <select asp-for="suguId" class ="form-control" asp-items="ViewBag.suguId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="tervis" class="control-label"></label>
-                <input asp-for="tervis" class="form-control" />
+                <input asp-for="tervis" class="form-control" min="1" max="10" />
                 <span asp-validation-for="tervis" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="viilatuupId" class="control-label"></label>
-                <select asp-for="viilatuupId" class="form-control" asp-items="ViewBag.viilatuupId"></select>
+                <label asp-for="suursus" class="control-label"></label>
+                <input asp-for="suursus" class="form-control" min="1" max="3"/>
+                <span asp-validation-for="suursus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="iseloomu" class="control-label"></label>
-                <input asp-for="iseloomu" class="form-control" />
-                <span asp-validation-for="iseloomu" class="text-danger"></span>
+                <label asp-for="viilatuupId" class="control-label"></label>
+                <select asp-for="viilatuupId" class ="form-control" asp-items="ViewBag.viilatuupId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="iseloomuId" class="control-label"></label>
+                <select asp-for="iseloomuId" class ="form-control" asp-items="ViewBag.iseloomuId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="tuupId" class="control-label"></label>
+                <select asp-for="tuupId" class ="form-control" asp-items="ViewBag.tuupId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="vanus" class="control-label"></label>
-                <input asp-for="vanus" class="form-control" />
+                <input asp-for="vanus" class="form-control" min="1" max="20"/>
                 <span asp-validation-for="vanus" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,7 +56,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Pärast nimekirja</a>
 </div>
 
 @section Scripts {

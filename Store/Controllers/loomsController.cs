@@ -22,34 +22,16 @@ namespace Store.Controllers
         // GET: looms
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.loomad.Include(l => l.sugu).Include(l => l.viilatüüp);
+            var applicationContext = _context.loomad.Include(l => l.iseloomu).Include(l => l.sugu).Include(l => l.tuup).Include(l => l.viilatüüp);
             return View(await applicationContext.ToListAsync());
-        }
-
-        // GET: looms/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.loomad == null)
-            {
-                return NotFound();
-            }
-
-            var loom = await _context.loomad
-                .Include(l => l.sugu)
-                .Include(l => l.viilatüüp)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (loom == null)
-            {
-                return NotFound();
-            }
-
-            return View(loom);
         }
 
         // GET: looms/Create
         public IActionResult Create()
         {
+            ViewData["iseloomuId"] = new SelectList(_context.iseloomud, "Id", "nimetus");
             ViewData["suguId"] = new SelectList(_context.sugud, "Id", "nimetus");
+            ViewData["tuupId"] = new SelectList(_context.Set<tuup>(), "Id", "nimetus");
             ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "nimetus");
             return View();
         }
@@ -59,17 +41,19 @@ namespace Store.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nimi,suguId,tervis,viilatuupId,iseloomu,vanus")] loom loom)
+        public async Task<IActionResult> Create([Bind("Id,Nimi,suguId,tervis,suursus,viilatuupId,iseloomuId,tuupId,vanus")] loom loom)
         {
-            if (ModelState.IsValid)
-            {
+            /*if (ModelState.IsValid)
+            {*/
                 _context.Add(loom);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["suguId"] = new SelectList(_context.sugud, "Id", "Id", loom.suguId);
-            ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "Id", loom.viilatuupId);
-            return View(loom);
+            /*}
+            ViewData["iseloomuId"] = new SelectList(_context.iseloomud, "Id", "nimetus", loom.iseloomuId);
+            ViewData["suguId"] = new SelectList(_context.sugud, "Id", "nimetus", loom.suguId);
+            ViewData["tuupId"] = new SelectList(_context.Set<tuup>(), "Id", "nimetus", loom.tuupId);
+            ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "nimetus", loom.viilatuupId);
+            return View(loom);*/
         }
 
         // GET: looms/Edit/5
@@ -85,8 +69,10 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-            ViewData["suguId"] = new SelectList(_context.sugud, "Id", "Id", loom.suguId);
-            ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "Id", loom.viilatuupId);
+            ViewData["iseloomuId"] = new SelectList(_context.iseloomud, "Id", "nimetus", loom.iseloomuId);
+            ViewData["suguId"] = new SelectList(_context.sugud, "Id", "nimetus", loom.suguId);
+            ViewData["tuupId"] = new SelectList(_context.Set<tuup>(), "Id", "nimetus", loom.tuupId);
+            ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "nimetus", loom.viilatuupId);
             return View(loom);
         }
 
@@ -95,15 +81,15 @@ namespace Store.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nimi,suguId,tervis,viilatuupId,iseloomu,vanus")] loom loom)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nimi,suguId,tervis,suursus,viilatuupId,iseloomuId,tuupId,vanus")] loom loom)
         {
             if (id != loom.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            /*if (ModelState.IsValid)
+            {*/
                 try
                 {
                     _context.Update(loom);
@@ -121,10 +107,12 @@ namespace Store.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["suguId"] = new SelectList(_context.sugud, "Id", "Id", loom.suguId);
-            ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "Id", loom.viilatuupId);
-            return View(loom);
+            /*}
+            ViewData["iseloomuId"] = new SelectList(_context.iseloomud, "Id", "nimetus", loom.iseloomuId);
+            ViewData["suguId"] = new SelectList(_context.sugud, "Id", "nimetus", loom.suguId);
+            ViewData["tuupId"] = new SelectList(_context.Set<tuup>(), "Id", "nimetus", loom.tuupId);
+            ViewData["viilatuupId"] = new SelectList(_context.viilatuupid, "Id", "nimetus", loom.viilatuupId);
+            return View(loom);*/
         }
 
         // GET: looms/Delete/5
@@ -136,7 +124,9 @@ namespace Store.Controllers
             }
 
             var loom = await _context.loomad
+                .Include(l => l.iseloomu)
                 .Include(l => l.sugu)
+                .Include(l => l.tuup)
                 .Include(l => l.viilatüüp)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (loom == null)

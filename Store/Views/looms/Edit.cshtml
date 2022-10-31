@@ -1,10 +1,10 @@
 ﻿@model Store.Models.loom
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Muuda";
 }
 
-<h1>Edit</h1>
+<h1>Muuda andmet</h1>
 
 <h4>loom</h4>
 <hr />
@@ -29,14 +29,24 @@
                 <span asp-validation-for="tervis" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="suursus" class="control-label"></label>
+                <input asp-for="suursus" class="form-control" />
+                <span asp-validation-for="suursus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="viilatuupId" class="control-label"></label>
                 <select asp-for="viilatuupId" class="form-control" asp-items="ViewBag.viilatuupId"></select>
                 <span asp-validation-for="viilatuupId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="iseloomu" class="control-label"></label>
-                <input asp-for="iseloomu" class="form-control" />
-                <span asp-validation-for="iseloomu" class="text-danger"></span>
+                <label asp-for="iseloomuId" class="control-label"></label>
+                <select asp-for="iseloomuId" class="form-control" asp-items="ViewBag.iseloomuId"></select>
+                <span asp-validation-for="iseloomuId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tuupId" class="control-label"></label>
+                <select asp-for="tuupId" class="form-control" asp-items="ViewBag.tuupId"></select>
+                <span asp-validation-for="tuupId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="vanus" class="control-label"></label>
@@ -44,14 +54,14 @@
                 <span asp-validation-for="vanus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salvesta" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Pärast nimekirja</a>
 </div>
 
 @section Scripts {

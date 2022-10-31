@@ -3,7 +3,17 @@ using System.Xml.Linq;
 
 namespace Store.Models
 {
+    public class iseloomu
+    {
+        public int Id { get; set; }
+        public string nimetus { get; set; }
+    }
     public class sugu
+    {
+        public int Id { get; set; }
+        public string nimetus { get; set; }
+    }
+    public class tuup
     {
         public int Id { get; set; }
         public string nimetus { get; set; }
@@ -24,12 +34,17 @@ namespace Store.Models
         public int suguId { get; set; }
         public  sugu sugu{ get; set; }
         [Required]
-        [EmailAddress]
         [Display(Name = "tervis (1/10)")]
         public int tervis { get; set; }
+        public int suursus { get; set; }
         public int viilatuupId { get; set; }
         public viilatuup viilatüüp { get; set; }
-        public string iseloomu { get; set; }
+        public int iseloomuId { get; set; }
+        public iseloomu iseloomu { get; set; }
+        [Required]
+        [Display(Name = "loomu tüüp")]
+        public int tuupId { get; set; }
+        public tuup tuup { get; set; }
         public int vanus { get; set; }
     }
 
