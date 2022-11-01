@@ -18,10 +18,6 @@ namespace Store.Models
         [Required]
         [Display(Name = "loom")]
         public loom loom { get; set; }
-        [Required]
-        [PasswordPropertyText]
-        [Display(Name = "salasõna")]
-        public string salasona { get; set; }
         public int teenustId { get; set; }
         public teenust teenused { get; set; }
         public DateTime bron { get; set; }

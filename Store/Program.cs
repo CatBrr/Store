@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Store.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var connectionStringKas = builder.Configuration.GetConnectionString("ApplicationContext");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -23,13 +25,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>(x => x.UseSqlite(connectionStringKas));
 builder.Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-
+   
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    
+
 }
 else
 {
