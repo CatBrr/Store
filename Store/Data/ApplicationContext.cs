@@ -18,7 +18,8 @@ namespace Store.Data
         public DbSet<klient> kliendit => Set<klient>();
         public DbSet<teenust> teenused => Set<teenust>();
         public DbSet<iseloomu> iseloomud => Set<iseloomu>();
-        public ApplicationContext() { Database.EnsureDeleted(); Database.EnsureCreated(); }
+        public DbSet<bron> bronid => Set<bron>();
+        public ApplicationContext() {  Database.EnsureCreated(); }
         protected override void OnConfiguring(DbContextOptionsBuilder optionbulder)
         {
             optionbulder.UseSqlite("Data Source=kasutajadBase.db");

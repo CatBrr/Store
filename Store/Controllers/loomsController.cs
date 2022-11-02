@@ -41,7 +41,7 @@ namespace Store.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nimi,suguId,tervis,suursus,viilatuupId,iseloomuId,tuupId,vanus")] loom loom)
+        public async Task<IActionResult> Create([Bind("Id,Nimi,suguId,tervis,suurus,viilatuupId,iseloomuId,tuupId,vanus")] loom loom)
         {
             /*if (ModelState.IsValid)
             {*/
@@ -81,7 +81,7 @@ namespace Store.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nimi,suguId,tervis,suursus,viilatuupId,iseloomuId,tuupId,vanus")] loom loom)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nimi,suguId,tervis,suurus,viilatuupId,iseloomuId,tuupId,vanus")] loom loom)
         {
             if (id != loom.Id)
             {

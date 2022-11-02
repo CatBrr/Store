@@ -36,7 +36,7 @@ namespace Store.Models
         [Required]
         [Display(Name = "tervis (1/10)")]
         public int tervis { get; set; }
-        public int suursus { get; set; }
+        public int suurus { get; set; }
         public int viilatuupId { get; set; }
         public viilatuup viilatüüp { get; set; }
         public int iseloomuId { get; set; }

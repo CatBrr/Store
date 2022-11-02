@@ -30,7 +30,7 @@ namespace Store.Controllers
         }
         public IActionResult Index()
         {
-            database();
+            //database();
             return View();
         }
 

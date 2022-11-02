@@ -1,16 +1,31 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Store.Data
+@using Store.Models
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                @{
+                    klient kl = new klient();
+                    using (ApplicationContext db = new ApplicationContext()){
+                        foreach (klient klient in db.kliendit)
+                        {
+                            if (User.Identity?.Name== klient.epost)
+                            {
+                                kl = klient;
+                            }
+                        }
+                    }
+                }
+            Tere @kl.Nimi !</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button  type="submit" class="nav-link btn btn-link text-dark">Logi välja</button>
         </form>
     </li>
 }

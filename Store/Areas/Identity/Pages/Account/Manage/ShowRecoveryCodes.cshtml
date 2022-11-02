@@ -1,18 +1,18 @@
 ﻿@page
 @model ShowRecoveryCodesModel
 @{
-    ViewData["Title"] = "Recovery codes";
-    ViewData["ActivePage"] = "TwoFactorAuthentication";
+    ViewData["Title"] = "Taastamiskoodid";
+    ViewData["ActivePage"] = "Kahe teguri autentimine";
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h3>@ViewData["Title"]</h3>
 <div class="alert alert-warning" role="alert">
     <p>
-        <strong>Put these codes in a safe place.</strong>
+        <strong>Pange need koodid kindlasse kohta.</strong>
     </p>
     <p>
-        If you lose your device and don't have the recovery codes you will lose access to your account.
+        Kui kaotate oma seadme ja teil pole taastekoode, kaotate juurdepääsu oma kontole.
     </p>
 </div>
 <div class="row">
