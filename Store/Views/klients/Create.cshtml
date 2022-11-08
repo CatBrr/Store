@@ -17,7 +17,18 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nimi" class="control-label"></label>
-                <input asp-for="Nimi" class="form-control" />
+                @{
+                    {
+                        if (SignInManager.IsSignedIn(User))
+                        {
+                            <input asp-for="Nimi" class="form-control" value="@User.Identity?.Na"/>
+                        }
+                        else
+                        {
+                            <input asp-for="Nimi" class="form-control" />
+                        }
+                }
+                
                 <span asp-validation-for="Nimi" class="text-danger"></span>
             </div>
             <br />
