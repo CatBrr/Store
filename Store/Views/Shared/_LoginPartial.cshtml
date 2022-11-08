@@ -10,18 +10,29 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
                 @{
-                    klient kl = new klient();
+                    string Name = null;
                     using (ApplicationContext db = new ApplicationContext()){
                         foreach (klient klient in db.kliendit)
                         {
                             if (User.Identity?.Name== klient.epost)
                             {
-                                kl = klient;
+                                Name = klient.Nimi;
+                            }
+                        }
+                        if (Name==null)
+                        {
+                            foreach (master master in db.teenindajad)
+                            {
+                                if (User.Identity?.Name == master.epost)
+                                {
+                                    Name = master.Nimi;
+                                }
                             }
                         }
                     }
                 }
-            Tere @kl.Nimi !</a>
+                Tere @Name !
+            </a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

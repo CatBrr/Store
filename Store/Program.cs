@@ -21,7 +21,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-
 builder.Services.AddDbContext<ApplicationContext>(x => x.UseSqlite(connectionStringKas));
 builder.Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
