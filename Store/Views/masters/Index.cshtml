@@ -1,13 +1,13 @@
-﻿@model IEnumerable<Store.Models.klient>
+﻿@model IEnumerable<Store.Models.master>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Klients tabel</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">reristreri klient</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.epost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.loomad)
+                @Html.DisplayNameFor(model => model.keelid)
             </th>
             <th></th>
         </tr>
@@ -46,12 +46,12 @@
                 @Html.DisplayFor(modelItem => item.epost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.loomad.Nimi)
+                @Html.DisplayFor(modelItem => item.keelid.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Muuda</a> |
-                    <!--<a asp-action="Details" asp-route-id="@item.Id">Details</a> |-->
-                <a asp-action="Delete" asp-route-id="@item.Id">Kustuta</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

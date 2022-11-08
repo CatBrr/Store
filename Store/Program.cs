@@ -15,6 +15,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var connectionStringKas = builder.Configuration.GetConnectionString("ApplicationContext");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
+/*builder.Services.AddDefaultIdentity<IdentityUser>()
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>();*/
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

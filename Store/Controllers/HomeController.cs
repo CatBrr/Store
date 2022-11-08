@@ -21,7 +21,6 @@ namespace Store.Controllers
             using (ApplicationContext db = new ApplicationContext())
             {
                 keel kel = new keel();
-                kel.kategoria = "A1";
                 kel.nimetus = "vene keel";
                 db.keelid.Add(kel);
                 db.SaveChanges();

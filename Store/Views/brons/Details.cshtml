@@ -1,4 +1,4 @@
-﻿@model Store.Models.klient
+﻿@model Store.Models.bron
 
 @{
     ViewData["Title"] = "Details";
@@ -7,32 +7,14 @@
 <h1>Details</h1>
 
 <div>
-    <h4>klient</h4>
+    <h4>bron</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nimi)
+            @Html.DisplayNameFor(model => model.klient)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nimi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Perenimi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Perenimi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.telefon)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.telefon)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.epost)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.epost)
+            @Html.DisplayFor(model => model.klient.Nimi)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.loomad)
@@ -40,9 +22,26 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.loomad.Id)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.master)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.master.epost)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.aeg)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.aeg)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.teenused)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.teenused.Id)
+        </dd>
     </dl>
 </div>
-<br />
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

@@ -1,0 +1,53 @@
+﻿@model Store.Models.bron
+@using Store.Models;
+@using Store.Data;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+}
+<h1>Create</h1>
+
+<h4>bron</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="klientId" class="control-label"></label>
+                <select asp-for="klientId" class ="form-control" asp-items="ViewBag.klientId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="loomId" class="control-label"></label>
+                <select asp-for="loomId" class ="form-control" asp-items="ViewBag.loomId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="masterId" class="control-label"></label>
+                <select asp-for="masterId"  class="form-control" asp-items="ViewBag.masterId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="aeg" class="control-label"></label>
+                <input asp-for="aeg" class="form-control" />
+                <span asp-validation-for="aeg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="teenustId" class="control-label"></label>
+                <select asp-for="teenustId" class ="form-control" asp-items="ViewBag.teenustId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

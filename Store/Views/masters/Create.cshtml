@@ -1,15 +1,12 @@
-﻿@model Store.Models.klient
-@using Microsoft.AspNetCore.Identity
-@using Store.Data
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@model Store.Models.master
+
 @{
-    ViewData["Title"] = "Loo uss";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Registreerimine klient</h1>
+<h1>Create</h1>
 
-<h4>klient</h4>
+<h4>master</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,43 +17,34 @@
                 <input asp-for="Nimi" class="form-control" />
                 <span asp-validation-for="Nimi" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
                 <label asp-for="Perenimi" class="control-label"></label>
                 <input asp-for="Perenimi" class="form-control" />
                 <span asp-validation-for="Perenimi" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
                 <label asp-for="telefon" class="control-label"></label>
                 <input asp-for="telefon" class="form-control" />
                 <span asp-validation-for="telefon" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
                 <label asp-for="epost" class="control-label"></label>
                 <input asp-for="epost" class="form-control" />
                 <span asp-validation-for="epost" class="text-danger"></span>
             </div>
-            <br />
             <div class="form-group">
-                <label asp-for="loomId" class="control-label"></label>
-                <select asp-for="loomId" class ="form-control" asp-items="ViewBag.loomId"></select>
+                <label asp-for="keelId" class="control-label"></label>
+                <select asp-for="keelId" class ="form-control" asp-items="ViewBag.keelId"></select>
             </div>
-            <br />
             <div class="form-group">
-                <input type="submit" value="Registreeri" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    @{if (SignInManager.IsSignedIn(User)){
-            <a asp-action="Index">pärast nimekirja</a>
-        }
-    }
-    
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

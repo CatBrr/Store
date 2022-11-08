@@ -20,37 +20,45 @@
                 <input asp-for="Nimi" class="form-control" />
                 <span asp-validation-for="Nimi" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="suguId" class="control-label"></label>
                 <select asp-for="suguId" class ="form-control" asp-items="ViewBag.suguId"></select>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="tervis" class="control-label"></label>
                 <input asp-for="tervis" class="form-control" min="1" max="10" />
                 <span asp-validation-for="tervis" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="suurus" class="control-label"></label>
                 <input asp-for="suurus" class="form-control" min="1" max="155"/>
                 <span asp-validation-for="suurus" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="viilatuupId" class="control-label"></label>
                 <select asp-for="viilatuupId" class ="form-control" asp-items="ViewBag.viilatuupId"></select>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="iseloomuId" class="control-label"></label>
                 <select asp-for="iseloomuId" class ="form-control" asp-items="ViewBag.iseloomuId"></select>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="tuupId" class="control-label"></label>
                 <select asp-for="tuupId" class ="form-control" asp-items="ViewBag.tuupId"></select>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="vanus" class="control-label"></label>
                 <input asp-for="vanus" class="form-control" min="1" max="20"/>
                 <span asp-validation-for="vanus" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Lissa loomad" class="btn btn-primary" />
             </div>

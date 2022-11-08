@@ -1,14 +1,13 @@
-﻿@model Store.Models.klient
+﻿@model Store.Models.master
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Delete</h1>
+<h1>Details</h1>
 
-<h3>Kas olete kindel, et soovite selle kustutada?</h3>
 <div>
-    <h4>klient</h4>
+    <h4>master</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -36,16 +35,14 @@
             @Html.DisplayFor(model => model.epost)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.loomad)
+            @Html.DisplayNameFor(model => model.keelid)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.loomad.Id)
+            @Html.DisplayFor(model => model.keelid.Id)
         </dd>
     </dl>
-    <br />
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Kustuta" class="btn btn-danger" /> |
-        <a asp-action="Index">pärast nimekirja</a>
-    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>
