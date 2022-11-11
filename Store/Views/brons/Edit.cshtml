@@ -1,12 +1,12 @@
 ﻿@model Store.Models.bron
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Muuda";
 }
 
-<h1>Edit</h1>
+<h1>Muuda</h1>
 
-<h4>bron</h4>
+<h4>Muuda broneerida aeg</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,14 +39,14 @@
                 <span asp-validation-for="teenustId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="salvestada" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">pärast nimekirja</a>
 </div>
 
 @section Scripts {

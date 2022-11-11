@@ -30,29 +30,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Umbes</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="teenused">Teenused</a>
+                        </li>
                         @{
                             if (SignInManager.IsSignedIn(User))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="looms" asp-action="Index">loomad</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Index">klientid</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create">Broneerida aeg</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="masters" asp-action="Index">teenindajad</a>
-                                </li>
-                            }
-                            else
-                            {
+                                
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="looms" asp-action="Create">loomad</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">klientid</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create">Broneerida aeg</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="masters" asp-action="Index">teenindajad</a>
                                 </li>
                             }
                         }

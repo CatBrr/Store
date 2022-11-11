@@ -48,6 +48,7 @@ namespace Store.Controllers
         // GET: klients/Create
         public IActionResult Create()
         {
+            
             ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
             return View();
         }

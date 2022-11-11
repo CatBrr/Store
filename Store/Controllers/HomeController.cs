@@ -27,6 +27,11 @@ namespace Store.Controllers
             };
 
         }
+        public IActionResult teenused()
+        {
+            //database();
+            return View();
+        }
         public IActionResult Index()
         {
             //database();
