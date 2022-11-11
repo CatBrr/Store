@@ -12,17 +12,33 @@
 
 <h4>broneerida</h4>
 <hr />
+@{
+    klient currentklient = null;
+    loom currentloom = null;
+    using(ApplicationContext db =new ApplicationContext()){
+        foreach(klient klient in db.kliendit){
+            if(User.Identity?.Name == klient.epost){
+                currentklient = klient;
+                currentloom = currentklient.loomad;
+            }
+        }
+    }
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="klientId" class="control-label"></label>
-                <select asp-for="klientId" class ="form-control" asp-items="ViewBag.klientId"></select>
+                <select asp-for="klientId" class ="form-control" asp-items="ViewBag.klientId">
+                    <option selected value="@currentklient.Id">@currentklient.Nimi @currentklient.Perenimi</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="loomId" class="control-label"></label>
-                <select asp-for="loomId" class ="form-control" asp-items="ViewBag.loomId"></select>
+                <select asp-for="loomId" class ="form-control" asp-items="ViewBag.loomId">
+                    <option selected value="@currentloom.Id">@currentloom.Nimi </option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="masterId" class="control-label"></label>
