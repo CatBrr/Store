@@ -40,6 +40,22 @@ namespace Store.Controllers
                 .Include(b => b.master)
                 .Include(b => b.teenused)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            loom loom = _context.loomad.Find(bron.loomId);
+            sugu sugu = _context.sugud.Find(loom.suguId);
+            viilatuup viilatuup= _context.viilatuupid.Find(loom.viilatuupId);
+            iseloomu iseloomu = _context.iseloomud.Find(loom.iseloomuId);
+            klient klient = _context.kliendit.Find(bron.klientId);
+            master master = _context.teenindajad.Find(bron.masterId);
+            ViewData["Nimi"] = loom.Nimi;
+            ViewData["sugu"] = sugu.nimetus;
+            ViewData["viilatuup"] = viilatuup.nimetus;
+            ViewData["iseloomu"] = iseloomu.nimetus;
+            ViewData["suurus"] = loom.suurus+" kg";
+            ViewData["tervis"] = loom.tervis+"/10";
+            ViewData["vanus"] = loom.vanus + " aastat vana";
+            ViewData["klient"] = klient.Nimi + " " + klient.Perenimi;
+            ViewData["epost"] = klient.epost;
+
             if (bron == null)
             {
                 return NotFound();
@@ -47,9 +63,55 @@ namespace Store.Controllers
 
             return View(bron);
         }
-
-        // GET: brons/Create
-        public IActionResult Create()
+        public IActionResult Bronered(bron bron)
+        {
+            ApplicationContext db = new ApplicationContext();
+            teenust tennust = null;
+            master master= null;
+            klient klient = null;
+            loom loom = null;
+            foreach (teenust ten in db.teenused)
+            {
+                if (ten.Id == bron.teenustId)
+                {
+                    tennust = ten;
+                    foreach (master mas in db.teenindajad)
+                    {
+                        if (mas.Id==bron.masterId)
+                        {
+                            master = mas;
+                            foreach (loom lo in db.loomad)
+                            {
+                                if (lo.Id==bron.loomId)
+                                {
+                                    loom = lo;
+                                    foreach (klient kl in db.kliendit)
+                                    {
+                                        if (kl.Id==bron.klientId)
+                                        {
+                                            klient = kl;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ViewData["teenust"] = tennust.nimetus;
+            ViewData["hind"] = tennust.hind;
+            ViewData["teenindajaNimi"] = master.Nimi+" "+master.Perenimi;
+            ViewData["teenindajaEmail"] = master.epost;
+            ViewData["teenindajaTelephone"] = master.telefon;
+            ViewData["klientNimi"] = klient.Nimi;
+            ViewData["klientPerenimi"] = klient.Perenimi;
+            ViewData["loomNimi"] = loom.Nimi;
+            ViewData["bronAeg"] = bron.aeg;
+            return View();
+            
+        }
+            // GET: brons/Create
+            public IActionResult Create()
         {
             ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
             ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
@@ -66,9 +128,16 @@ namespace Store.Controllers
         public async Task<IActionResult> Create([Bind("Id,klientId,loomId,masterId,aeg,teenustId")] bron bron)
         {
 
-                _context.Add(bron);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            _context.Add(bron);
+            await _context.SaveChangesAsync();
+            bron newbron = new bron();
+            newbron.Id= bron.Id;
+            newbron.teenustId = bron.teenustId;
+            newbron.masterId = bron.masterId;
+            newbron.klientId = bron.klientId;
+            newbron.loomId = bron.loomId;
+            newbron.aeg = bron.aeg;
+            return RedirectToAction(nameof(Bronered), newbron);
 
         }
 

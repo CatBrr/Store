@@ -6,6 +6,7 @@
 @inject UserManager<IdentityUser> UserManager
 
 @{
+    //<option selected value="@currentloom.Id">@currentloom.Nimi </option>
     ViewData["Title"] = "broneeerida";
 }
 <h1>broneerida aeg</h1>
@@ -19,7 +20,11 @@
         foreach(klient klient in db.kliendit){
             if(User.Identity?.Name == klient.epost){
                 currentklient = klient;
-                currentloom = currentklient.loomad;
+                foreach(loom loom in db.loomad){
+                    if(loom.Id==currentklient.loomId){
+                        currentloom = loom;
+                    }
+                 }
             }
         }
     }

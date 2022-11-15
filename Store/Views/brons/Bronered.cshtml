@@ -1,0 +1,27 @@
+﻿@using Store
+@{
+    ViewData["Title"] = "edukalt broneeritud!";
+}
+<h1>@ViewData["Title"]</h1>
+<h2>klient</h2>
+<p>@ViewBag.klientNimi @ViewBag.klientPerenimi</p>
+<h2>teenindaja</h2>
+<p>
+    @ViewBag.teenindajaNimi
+</p>
+<p>
+    Kontact:
+    e-post: @ViewBag.teenindajaEmail
+    telefon: @ViewBag.teenindajaTelephone
+</p>
+<h2>loom</h2>
+<p>@ViewBag.loomNimi</p>
+<h2>bronerida</h2>
+<table class="table">
+    <tr><th>teenust</th><th>hind</th><th>aeg</th></tr>
+    <tr>
+        <td>@ViewBag.teenust</td>
+        <td>@ViewBag.hind €</td>
+        <td>@ViewBag.bronAeg</td>
+    </tr>
+</table>

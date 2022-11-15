@@ -1,12 +1,25 @@
 ﻿@model IEnumerable<Store.Models.bron>
-
+@using Store.Models;
+@using Store.Data;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Sinu bron</h1>
 <p>
-    <a asp-action="Create">Broneerida aeg</a>
+    @{
+        ApplicationContext db = new ApplicationContext();
+        foreach(klient klient in db.kliendit){
+            if (User.Identity?.Name==klient.epost)
+            {
+                <a asp-action="Create">Broneerida aeg</a>
+            }
+        }
+        
+    }
 </p>
 <table class="table">
     <thead>
@@ -36,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.klient.Nimi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.loomad.Id)
+                @Html.DisplayFor(modelItem => item.loomad.Nimi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.master.epost)
@@ -45,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.aeg)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.teenused.Id)
+                @Html.DisplayFor(modelItem => item.teenused.nimetus)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Muuda</a> |

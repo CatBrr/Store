@@ -14,14 +14,17 @@
             @Html.DisplayNameFor(model => model.klient)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.klient.Nimi)
+            @ViewBag.klient
         </dd>
+        <dt class="col-sm-2"></dt>
+        <dd class="col-sm-10"><a href="">@ViewBag.epost</a></dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.loomad)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.loomad.Id)
         </dd>
+            
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.master)
         </dt>
@@ -42,6 +45,18 @@
         </dd>
     </dl>
 </div>
+<table class="table">
+    <tr>
+        <th>nimi</th>
+        <th>sugu</th>
+        <th>iseloomu</th>
+        <th>suurus</th>
+        <th>tervis</th>
+        <th>vanus</th>
+        <th>viilatuup</th>
+    </tr>
+    <tr><td>@ViewBag.Nimi</td><td>@ViewBag.sugu</td><td>@ViewBag.iseloomu</td><td>@ViewBag.suurus</td><td>@ViewBag.tervis</td><td>@ViewBag.vanus</td><td>@ViewBag.viilatuup</td></tr>
+</table>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">pärast nimekirja</a>

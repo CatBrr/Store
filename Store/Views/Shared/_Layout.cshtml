@@ -36,19 +36,53 @@
                         @{
                             if (SignInManager.IsSignedIn(User))
                             {
-                                
+                                klient Currentklient = null;
+                                master Currentmaster = null;
+                                using(ApplicationContext db  = new ApplicationContext()){
+                                    foreach (klient klient in db.kliendit)
+                                    {
+                                        if (User.Identity?.Name == klient.epost)
+                                        {
+                                            Currentklient = klient;
+                                        }
+                                    }
+                                    if (Currentklient==null)
+                                    {
+                                        foreach (master master in db.teenindajad)
+                                        {
+                                            if (User.Identity?.Name == master.epost)
+                                            {
+                                                Currentmaster = master;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (Currentmaster == null)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">klientid</a>
+                                    </li>
+                                }
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="looms" asp-action="Create">loomad</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="looms" asp-action="Index">loomad</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">klientid</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create">Broneerida aeg</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="masters" asp-action="Index">teenindajad</a>
-                                </li>
+
+                                if (Currentklient != null)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Index">Broneerida aeg</a>
+                                    </li>
+                                }
+
+                                if (Currentmaster != null)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Index">Broneerid</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="masters" asp-action="Index">teenindajad</a>
+                                    </li>
+                                }
                             }
                         }
                         
