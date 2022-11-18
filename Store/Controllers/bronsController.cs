@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Store.Data;
 using Store.Models;
 
@@ -33,7 +37,12 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            bron bronm = (bron)_context.bronid.Find(id);
+            klient klient = (klient)_context.kliendit.Find(bronm.klientId);
+            if (User.Identity?.Name != klient.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var bron = await _context.bronid
                 .Include(b => b.klient)
                 .Include(b => b.loomad)
@@ -44,7 +53,6 @@ namespace Store.Controllers
             sugu sugu = _context.sugud.Find(loom.suguId);
             viilatuup viilatuup= _context.viilatuupid.Find(loom.viilatuupId);
             iseloomu iseloomu = _context.iseloomud.Find(loom.iseloomuId);
-            klient klient = _context.kliendit.Find(bron.klientId);
             master master = _context.teenindajad.Find(bron.masterId);
             ViewData["Nimi"] = loom.Nimi;
             ViewData["sugu"] = sugu.nimetus;
@@ -98,6 +106,16 @@ namespace Store.Controllers
                     }
                 }
             }
+            MailRequest mailRequest = new MailRequest();
+            mailRequest.ToEmail = klient.epost;
+            mailRequest.Body = $"Sa bronnid aeg{bron.aeg} teenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind}";
+            mailRequest.Subject = "Broonerida teenust";
+            WebMail.SmtpServer = "smtp.gmail.com";
+            WebMail.SmtpPort = 587;
+            WebMail.EnableSsl = true;
+            WebMail.UserName = "petcare615@yahoo.com";
+            WebMail.Password = "123catbrat";
+            WebMail.Send(mailRequest.ToEmail, mailRequest.Subject, mailRequest.Body);
             ViewData["teenust"] = tennust.nimetus;
             ViewData["hind"] = tennust.hind;
             ViewData["teenindajaNimi"] = master.Nimi+" "+master.Perenimi;
@@ -154,6 +172,13 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
+            bron bronm = (bron)_context.bronid.Find(id);
+            klient klient= (klient)_context.kliendit.Find(bronm.klientId);
+            if (User.Identity?.Name != klient.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+                
             ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
             ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
             ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
@@ -201,7 +226,12 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            bron bronm = (bron)_context.bronid.Find(id);
+            klient klient = (klient)_context.kliendit.Find(bronm.klientId);
+            if (User.Identity?.Name != klient.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var bron = await _context.bronid
                 .Include(b => b.klient)
                 .Include(b => b.loomad)

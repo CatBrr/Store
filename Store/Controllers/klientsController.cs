@@ -33,7 +33,11 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            klient kl = (klient)_context.kliendit.Find(id);
+            if (User.Identity?.Name != kl.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var klient = await _context.kliendit
                 .Include(k => k.loomad)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -77,7 +81,11 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            klient kl = (klient)_context.kliendit.Find(id);
+            if (User.Identity?.Name != kl.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var klient = await _context.kliendit.FindAsync(id);
             if (klient == null)
             {
@@ -129,6 +137,11 @@ namespace Store.Controllers
             if (id == null || _context.kliendit == null)
             {
                 return NotFound();
+            }
+            klient kl = (klient)_context.kliendit.Find(id);
+            if (User.Identity?.Name != kl.epost)
+            {
+                return RedirectToAction(nameof(Index));
             }
 
             var klient = await _context.kliendit

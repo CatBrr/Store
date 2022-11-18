@@ -33,7 +33,11 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            master kl = (master)_context.teenindajad.Find(id);
+            if (User.Identity?.Name != kl.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var master = await _context.teenindajad
                 .Include(m => m.keelid)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -71,7 +75,11 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            master kl = (master)_context.teenindajad.Find(id);
+            if (User.Identity?.Name != kl.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var master = await _context.teenindajad.FindAsync(id);
             if (master == null)
             {
@@ -115,6 +123,11 @@ namespace Store.Controllers
         // GET: masters/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            master kl = (master)_context.teenindajad.Find(id);
+            if (User.Identity?.Name != kl.epost)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             if (id == null || _context.teenindajad == null)
             {
                 return NotFound();

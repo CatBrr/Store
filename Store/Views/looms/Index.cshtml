@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Store.Models.loom>
+@using Store.Models;
+@using Store.Data;
 
 @{
     ViewData["Title"] = "Loomad";
@@ -7,7 +9,21 @@
 <h1>Loomad tabel</h1>
 
 <p>
-    <a asp-action="Create">Lissa loom</a>
+    @{
+        ApplicationContext db = new ApplicationContext();
+        klient kl = null;
+        foreach (klient kli in db.kliendit)
+        {
+            if (User.Identity?.Name == kli.epost)
+            {
+                kl = kli;
+            }
+        }
+        if (kl != null)
+        {
+            <a asp-action="Create">Lissa loom</a>
+        }
+    }
 </p>
 <table class="table">
     <thead>

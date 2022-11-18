@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using Store.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDbContext<ApplicationContext>(x => x.UseSqlite(connectionStringKas));
 builder.Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

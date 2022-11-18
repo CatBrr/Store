@@ -63,7 +63,18 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            klient kl = null;
+            foreach (klient kli in _context.kliendit)
+            {
+                if (User.Identity?.Name == kli.epost)
+                {
+                    kl = kli;
+                }
+            }
+            if (kl.loomId != id || kl == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var loom = await _context.loomad.FindAsync(id);
             if (loom == null)
             {
@@ -121,6 +132,18 @@ namespace Store.Controllers
             if (id == null || _context.loomad == null)
             {
                 return NotFound();
+            }
+            klient kl = null;
+            foreach (klient kli in _context.kliendit)
+            {
+                if (User.Identity?.Name==kli.epost)
+                {
+                    kl = kli;
+                }
+            }
+            if (kl.loomId != id || kl==null)
+            {
+                return RedirectToAction(nameof(Index));
             }
 
             var loom = await _context.loomad

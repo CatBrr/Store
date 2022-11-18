@@ -19,12 +19,6 @@
                 @Html.DisplayNameFor(model => model.Perenimi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.telefon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.epost)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.loomad)
             </th>
             <th></th>
@@ -40,17 +34,11 @@
                 @Html.DisplayFor(modelItem => item.Perenimi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.telefon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.epost)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.loomad.Nimi)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Muuda</a> |
-                    <!--<a asp-action="Details" asp-route-id="@item.Id">Details</a> |-->
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Kustuta</a>
             </td>
         </tr>
