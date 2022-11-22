@@ -122,10 +122,25 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
+            foreach (klient kl in _context.kliendit)
+            {
+                if (kl.loomId == klient.loomId || kl.epost == klient.epost)
+                {
+                    ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi", klient.loomId);
+                    return View(klient);
+                }
+            }
+            foreach (master kl in _context.teenindajad)
+            {
+                if (kl.epost == klient.epost)
+                {
+                    ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi", klient.loomId);
+                    return View(klient);
+                }
+            }
             /*if (ModelState.IsValid)
             {*/
-                try
+            try
                 {
                     _context.Update(klient);
                     await _context.SaveChangesAsync();

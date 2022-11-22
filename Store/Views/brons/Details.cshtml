@@ -49,13 +49,14 @@
     <tr>
         <th>nimi</th>
         <th>sugu</th>
+        <th>tüüp</th>
         <th>iseloomu</th>
         <th>suurus</th>
         <th>tervis</th>
         <th>vanus</th>
         <th>viilatuup</th>
     </tr>
-    <tr><td>@ViewBag.Nimi</td><td>@ViewBag.sugu</td><td>@ViewBag.iseloomu</td><td>@ViewBag.suurus</td><td>@ViewBag.tervis</td><td>@ViewBag.vanus</td><td>@ViewBag.viilatuup</td></tr>
+    <tr><td>@ViewBag.Nimi</td><td>@ViewBag.sugu</td><td>@ViewBag.tuup</td><td>@ViewBag.iseloomu</td><td>@ViewBag.suurus</td><td>@ViewBag.tervis</td><td>@ViewBag.vanus</td><td>@ViewBag.viilatuup</td></tr>
 </table>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

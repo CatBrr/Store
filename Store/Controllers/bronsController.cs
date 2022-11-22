@@ -41,11 +41,6 @@ namespace Store.Controllers
             }
             bron bronm = (bron)_context.bronid.Find(id);
             klient klient = (klient)_context.kliendit.Find(bronm.klientId);
-            master master_ = (master)_context.teenindajad.Find(bronm.masterId);
-            if (User.Identity?.Name != klient.epost || User.Identity?.Name != master_.epost)
-            {
-                return RedirectToAction(nameof(Index));
-            }
             var bron = await _context.bronid
                 .Include(b => b.klient)
                 .Include(b => b.loomad)
@@ -62,7 +57,7 @@ namespace Store.Controllers
             ViewData["viilatuup"] = viilatuup.nimetus;
             ViewData["iseloomu"] = iseloomu.nimetus;
             ViewData["suurus"] = loom.suurus+" kg";
-            ViewData["tervis"] = loom.tervis+"/10";
+            ViewData["tervis"] = loom.tervis + "/10";
             ViewData["vanus"] = loom.vanus + " aastat vana";
             ViewData["klient"] = klient.Nimi + " " + klient.Perenimi;
             ViewData["epost"] = klient.epost;
@@ -71,8 +66,20 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
+            if (User.Identity?.Name == master.epost)
+            {
+                return View(bron);
 
-            return View(bron);
+            }
+            else if (User.Identity?.Name == klient.epost)
+            {
+                return View(bron);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
         }
         public IActionResult Bronered(bron bron)
         {
@@ -199,17 +206,24 @@ namespace Store.Controllers
             }
             bron bronm = (bron)_context.bronid.Find(id);
             klient klient= (klient)_context.kliendit.Find(bronm.klientId);
-            master master = (master)_context.teenindajad.Find(bronm.masterId);
-            if (User.Identity?.Name != klient.epost || User.Identity?.Name != master.epost)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-                
+            master master = (master)_context.teenindajad.Find(bronm.masterId);  
             ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
             ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
             ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
             ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
-            return View(bron);
+            if (User.Identity?.Name == master.epost)
+            {
+                return View(bron);
+
+            }
+            else if (User.Identity?.Name == klient.epost)
+            {
+                return View(bron);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: brons/Edit/5
@@ -255,10 +269,7 @@ namespace Store.Controllers
             bron bronm = (bron)_context.bronid.Find(id);
             klient klient = (klient)_context.kliendit.Find(bronm.klientId);
             master master = (master)_context.teenindajad.Find(bronm.masterId);
-            if (User.Identity?.Name != klient.epost || User.Identity?.Name != master.epost)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            
             var bron = await _context.bronid
                 .Include(b => b.klient)
                 .Include(b => b.loomad)
@@ -269,8 +280,19 @@ namespace Store.Controllers
             {
                 return NotFound();
             }
-
-            return View(bron);
+            if (User.Identity?.Name == master.epost)
+            {
+                return View(bron);
+                
+            }
+            else if (User.Identity?.Name == klient.epost)
+            {
+                return View(bron);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: brons/Delete/5

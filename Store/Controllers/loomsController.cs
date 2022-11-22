@@ -18,7 +18,7 @@ namespace Store.Controllers
         {
             _context = context;
         }
-
+        
         // GET: looms
         public async Task<IActionResult> Index()
         {
