@@ -111,7 +111,7 @@ namespace Store.Controllers
             }
             MailRequest mailRequest = new MailRequest();
             mailRequest.ToEmail = klient.epost;
-            mailRequest.Body = $"Sinu bronnid aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind}";
+            mailRequest.Body = $"Sinu bronnid aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\nTäname meie teenuste ostmise eest! Head päeva! \n\nⒸPetCare";
             mailRequest.Subject = "Broonerida teenust";
             SmtpMail oMail = new SmtpMail("TryIt");
 
