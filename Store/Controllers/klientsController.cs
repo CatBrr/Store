@@ -66,9 +66,25 @@ namespace Store.Controllers
         {
             /*if (ModelState.IsValid)
             {*/
-                _context.Add(klient);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            foreach (klient kl in _context.kliendit)
+            {
+                if (kl.loomId==klient.loomId|| kl.epost== klient.epost)
+                {
+                    ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi", klient.loomId);
+                    return View(klient);
+                }
+            }
+            foreach (master kl in _context.teenindajad)
+            {
+                if ( kl.epost == klient.epost)
+                {
+                    ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi", klient.loomId);
+                    return View(klient);
+                }
+            }
+            _context.Add(klient);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
             /*}
             ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi", klient.loomId);
             return View(klient);*/

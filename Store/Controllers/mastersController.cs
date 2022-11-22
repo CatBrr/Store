@@ -63,7 +63,23 @@ namespace Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nimi,Perenimi,telefon,epost,keelId")] master master)
         {
-                _context.Add(master);
+            foreach (master kl in _context.teenindajad)
+            {
+                if ( kl.epost == master.epost)
+                {
+                    ViewData["keelId"] = new SelectList(_context.keelid, "Id", "nimetus");
+                    return View(master);
+                }
+            }
+            foreach (klient kl in _context.kliendit)
+            {
+                if (kl.epost == master.epost)
+                {
+                    ViewData["keelId"] = new SelectList(_context.keelid, "Id", "nimetus");
+                    return View(master);
+                }
+            }
+            _context.Add(master);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
         }

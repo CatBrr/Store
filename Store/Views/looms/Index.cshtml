@@ -9,21 +9,7 @@
 <h1>Loomad tabel</h1>
 
 <p>
-    @{
-        ApplicationContext db = new ApplicationContext();
-        klient kl = null;
-        foreach (klient kli in db.kliendit)
-        {
-            if (User.Identity?.Name == kli.epost)
-            {
-                kl = kli;
-            }
-        }
-        if (kl != null)
-        {
             <a asp-action="Create">Lissa loom</a>
-        }
-    }
 </p>
 <table class="table">
     <thead>

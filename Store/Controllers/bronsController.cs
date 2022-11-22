@@ -5,12 +5,14 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Helpers;
+using EASendMail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Store.Data;
 using Store.Models;
+using SmtpClient = EASendMail.SmtpClient;
 
 namespace Store.Controllers
 {
@@ -39,7 +41,8 @@ namespace Store.Controllers
             }
             bron bronm = (bron)_context.bronid.Find(id);
             klient klient = (klient)_context.kliendit.Find(bronm.klientId);
-            if (User.Identity?.Name != klient.epost)
+            master master_ = (master)_context.teenindajad.Find(bronm.masterId);
+            if (User.Identity?.Name != klient.epost || User.Identity?.Name != master_.epost)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -108,14 +111,36 @@ namespace Store.Controllers
             }
             MailRequest mailRequest = new MailRequest();
             mailRequest.ToEmail = klient.epost;
-            mailRequest.Body = $"Sa bronnid aeg{bron.aeg} teenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind}";
+            mailRequest.Body = $"Sinu bronnid aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind}";
             mailRequest.Subject = "Broonerida teenust";
-            WebMail.SmtpServer = "smtp.gmail.com";
-            WebMail.SmtpPort = 587;
-            WebMail.EnableSsl = true;
-            WebMail.UserName = "petcare615@yahoo.com";
-            WebMail.Password = "123catbrat";
-            WebMail.Send(mailRequest.ToEmail, mailRequest.Subject, mailRequest.Body);
+            SmtpMail oMail = new SmtpMail("TryIt");
+
+            // Your email address
+            oMail.From = "testcat_pet_care@hotmail.com";
+
+            // Set recipient email address
+            oMail.To = mailRequest.ToEmail;
+
+            // Set email subject
+            oMail.Subject = mailRequest.Subject;
+
+            // Set email body
+            oMail.TextBody = mailRequest.Body;
+
+            // Hotmail/Outlook SMTP server address
+            SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+            // If your account is office 365, please change to Office 365 SMTP server
+            // SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+            // User authentication should use your
+            // email address as the user name.
+            oServer.User = "testcat_pet_care@hotmail.com";
+            oServer.Password = "Testcat__12";
+            oServer.Port = 587;
+            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+            SmtpClient oSmtp = new SmtpClient();
+            oSmtp.SendMail(oServer, oMail);
             ViewData["teenust"] = tennust.nimetus;
             ViewData["hind"] = tennust.hind;
             ViewData["teenindajaNimi"] = master.Nimi+" "+master.Perenimi;
@@ -174,7 +199,8 @@ namespace Store.Controllers
             }
             bron bronm = (bron)_context.bronid.Find(id);
             klient klient= (klient)_context.kliendit.Find(bronm.klientId);
-            if (User.Identity?.Name != klient.epost)
+            master master = (master)_context.teenindajad.Find(bronm.masterId);
+            if (User.Identity?.Name != klient.epost || User.Identity?.Name != master.epost)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -228,7 +254,8 @@ namespace Store.Controllers
             }
             bron bronm = (bron)_context.bronid.Find(id);
             klient klient = (klient)_context.kliendit.Find(bronm.klientId);
-            if (User.Identity?.Name != klient.epost)
+            master master = (master)_context.teenindajad.Find(bronm.masterId);
+            if (User.Identity?.Name != klient.epost || User.Identity?.Name != master.epost)
             {
                 return RedirectToAction(nameof(Index));
             }
