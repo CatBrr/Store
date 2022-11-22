@@ -57,12 +57,9 @@
                                         }
                                     }
                                 }
-                                if (Currentmaster == null)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">klientid</a>
-                                    </li>
-                                }
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Index">klientid</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="looms" asp-action="Index">loomad</a>
                                 </li>
@@ -72,6 +69,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Index">Broneerida aeg</a>
                                     </li>
+
                                 }
 
                                 if (Currentmaster != null)

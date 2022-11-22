@@ -118,12 +118,12 @@ namespace Store.Controllers
             }
             MailRequest mailRequest = new MailRequest();
             mailRequest.ToEmail = klient.epost;
-            mailRequest.Body = $"Sinu bronnid aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\nTäname meie teenuste ostmise eest! Head päeva! \n\nⒸPetCare";
+            mailRequest.Body = $"Sinu bronnerida aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\nTäname meie teenuste ostmise eest! Head päeva! \n\nⒸPetCare";
             mailRequest.Subject = "Broonerida teenust";
             SmtpMail oMail = new SmtpMail("TryIt");
 
             // Your email address
-            oMail.From = "testcat_pet_care@hotmail.com";
+            oMail.From = "petcare_12@hotmail.com";
 
             // Set recipient email address
             oMail.To = mailRequest.ToEmail;
@@ -142,8 +142,8 @@ namespace Store.Controllers
 
             // User authentication should use your
             // email address as the user name.
-            oServer.User = "testcat_pet_care@hotmail.com";
-            oServer.Password = "Testcat__12";
+            oServer.User = "petcare_12@hotmail.com";
+            oServer.Password = "Testcat__123";
             oServer.Port = 587;
             oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
             SmtpClient oSmtp = new SmtpClient();
@@ -177,18 +177,37 @@ namespace Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,klientId,loomId,masterId,aeg,teenustId")] bron bron)
         {
+            klient klient = _context.kliendit.Find(bron.klientId);
 
-            _context.Add(bron);
-            await _context.SaveChangesAsync();
-            bron newbron = new bron();
-            newbron.Id= bron.Id;
-            newbron.teenustId = bron.teenustId;
-            newbron.masterId = bron.masterId;
-            newbron.klientId = bron.klientId;
-            newbron.loomId = bron.loomId;
-            newbron.aeg = bron.aeg;
-            return RedirectToAction(nameof(Bronered), newbron);
-
+            if (User.Identity?.Name != klient.epost)
+            {
+                ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
+                ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
+                ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
+                ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
+                return View(bron);
+            }
+            else if (klient.loomId != bron.loomId)
+            {
+                ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
+                ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
+                ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
+                ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
+                return View(bron);
+            }
+            else
+            {
+                _context.Add(bron);
+                await _context.SaveChangesAsync();
+                bron newbron = new bron();
+                newbron.Id = bron.Id;
+                newbron.teenustId = bron.teenustId;
+                newbron.masterId = bron.masterId;
+                newbron.klientId = bron.klientId;
+                newbron.loomId = bron.loomId;
+                newbron.aeg = bron.aeg;
+                return RedirectToAction(nameof(Bronered), newbron);
+            }
         }
 
         // GET: brons/Edit/5
@@ -255,7 +274,43 @@ namespace Store.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                klient klient = (klient)_context.kliendit.Find(bron.klientId);
+                master master = (master)_context.teenindajad.Find(bron.masterId);
+                teenust tennust = (teenust)_context.teenused.Find(bron.teenustId);
+                MailRequest mailRequest = new MailRequest();
+                mailRequest.ToEmail = klient.epost;
+                mailRequest.Body = $"Sinu bronnerida aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\n Head päeva! \n\nⒸPetCare";
+                mailRequest.Subject = "Sinu Broonerida on muutatud";
+                SmtpMail oMail = new SmtpMail("TryIt");
+
+                // Your email address
+                oMail.From = "petcare_12@hotmail.com";
+            
+
+            // Set recipient email address
+            oMail.To = mailRequest.ToEmail;
+
+            // Set email subject
+            oMail.Subject = mailRequest.Subject;
+
+            // Set email body
+            oMail.TextBody = mailRequest.Body;
+
+            // Hotmail/Outlook SMTP server address
+            SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+            // If your account is office 365, please change to Office 365 SMTP server
+            // SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+            // User authentication should use your
+            // email address as the user name.
+            oServer.User = "petcare_12@hotmail.com";
+            oServer.Password = "Testcat__123";
+            oServer.Port = 587;
+            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+            SmtpClient oSmtp = new SmtpClient();
+            oSmtp.SendMail(oServer, oMail);
+            return RedirectToAction(nameof(Index));
 
         }
 
@@ -311,6 +366,39 @@ namespace Store.Controllers
             }
             
             await _context.SaveChangesAsync();
+            klient klient = (klient)_context.kliendit.Find(bron.klientId);
+            MailRequest mailRequest = new MailRequest();
+            mailRequest.ToEmail = klient.epost;
+            mailRequest.Body = $"Sinu bronnerida aeg on kustatud\n Head päeva! \n\nⒸPetCare";
+            mailRequest.Subject = "Sinu Broonerida on kustatud";
+            SmtpMail oMail = new SmtpMail("TryIt");
+
+            // Your email address
+            oMail.From = "petcare_12@hotmail.com";
+
+            // Set recipient email address
+            oMail.To = mailRequest.ToEmail;
+
+            // Set email subject
+            oMail.Subject = mailRequest.Subject;
+
+            // Set email body
+            oMail.TextBody = mailRequest.Body;
+
+            // Hotmail/Outlook SMTP server address
+            SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+            // If your account is office 365, please change to Office 365 SMTP server
+            // SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+            // User authentication should use your
+            // email address as the user name.
+            oServer.User = "petcare_12@hotmail.com";
+            oServer.Password = "Testcat__123";
+            oServer.Port = 587;
+            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+            SmtpClient oSmtp = new SmtpClient();
+            oSmtp.SendMail(oServer, oMail);
             return RedirectToAction(nameof(Index));
         }
 
