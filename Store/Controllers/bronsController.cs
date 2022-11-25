@@ -89,43 +89,10 @@ namespace Store.Controllers
             }
 
         }
-        public IActionResult Bronered(bron bron)
+        public int CheckHours(teenust tennust)
         {
-            ApplicationContext db = new ApplicationContext();
-            teenust tennust = null;
-            master master= null;
-            klient klient = null;
-            loom loom = null;
-            foreach (teenust ten in db.teenused)
-            {
-                if (ten.Id == bron.teenustId)
-                {
-                    tennust = ten;
-                    foreach (master mas in db.teenindajad)
-                    {
-                        if (mas.Id==bron.masterId)
-                        {
-                            master = mas;
-                            foreach (loom lo in db.loomad)
-                            {
-                                if (lo.Id==bron.loomId)
-                                {
-                                    loom = lo;
-                                    foreach (klient kl in db.kliendit)
-                                    {
-                                        if (kl.Id==bron.klientId)
-                                        {
-                                            klient = kl;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            int hours_to_do=0;
-            if (tennust.nimetus == "soengkass"|| tennust.nimetus == "soengkoer")
+            int hours_to_do = 0;
+            if (tennust.nimetus == "soengkass" || tennust.nimetus == "soengkoer")
             {
                 hours_to_do = 2;
             }
@@ -169,11 +136,49 @@ namespace Store.Controllers
             {
                 hours_to_do = 3;
             }
+            return hours_to_do;
+        }
+        public IActionResult Bronered(bron bron)
+        {
+            ApplicationContext db = new ApplicationContext();
+            teenust tennust = null;
+            master master= null;
+            klient klient = null;
+            loom loom = null;
+            foreach (teenust ten in db.teenused)
+            {
+                if (ten.Id == bron.teenustId)
+                {
+                    tennust = ten;
+                    foreach (master mas in db.teenindajad)
+                    {
+                        if (mas.Id==bron.masterId)
+                        {
+                            master = mas;
+                            foreach (loom lo in db.loomad)
+                            {
+                                if (lo.Id==bron.loomId)
+                                {
+                                    loom = lo;
+                                    foreach (klient kl in db.kliendit)
+                                    {
+                                        if (kl.Id==bron.klientId)
+                                        {
+                                            klient = kl;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             MailRequest mailRequest = new MailRequest();
             mailRequest.ToEmail = klient.epost;
             mailRequest.Body = $"Sinu bronnerida aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\nTäname meie teenuste ostmise eest! Head päeva! \n\nⒸPetCare";
             mailRequest.Subject = "Broonerida teenust";
-            
+            int hours_to_do = CheckHours(tennust);
             var calendar = new Calendar();
 
             var icalEvent = new CalendarEvent
@@ -185,6 +190,7 @@ namespace Store.Controllers
                 Start = new CalDateTime(bron.aeg),
                 End = new CalDateTime(bron.aeg.AddHours(hours_to_do)),
                 Created = new CalDateTime(DateTime.Now),
+                Organizer=new Organizer("petcare_12@hotmail.com")
             };
 
             calendar.Events.Add(icalEvent);
@@ -341,11 +347,34 @@ namespace Store.Controllers
                 mailRequest.ToEmail = klient.epost;
                 mailRequest.Body = $"Sinu bronnerida aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\n Head päeva! \n\nⒸPetCare";
                 mailRequest.Subject = "Sinu Broonerida on muutatud";
+                int hours_to_do = CheckHours(tennust);
+                var calendar = new Calendar();
+
+                var icalEvent = new CalendarEvent
+                {
+                    Class = "PUBLIC",
+                    Summary = mailRequest.Subject,
+                    Description = mailRequest.Body,
+                    // 15th of march 2021 12 o'clock.
+                    Start = new CalDateTime(bron.aeg),
+                    End = new CalDateTime(bron.aeg.AddHours(hours_to_do)),
+                    Created = new CalDateTime(DateTime.Now),
+                    Organizer = new Organizer("petcare_12@hotmail.com")
+                };
+
+                calendar.Events.Add(icalEvent);
+
+                var serializer = new CalendarSerializer(new SerializationContext());
+                var serializedCalendar = serializer.SerializeToString(calendar);
+                var bytesCalendar = Encoding.UTF8.GetBytes(serializedCalendar);
+                MemoryStream ms = new MemoryStream(bytesCalendar);
+                System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(ms, "bron.ics", "text/calendar");
                 MailMessage message = new MailMessage();
                 message.To.Add(mailRequest.ToEmail);
                 message.From = new MailAddress("petcare_12@hotmail.com", "Pet Care");
                 message.Subject = mailRequest.Subject;
                 message.Body = mailRequest.Body;
+                message.Attachments.Add(attachment);
                 var smtpClient = new SmtpClient("smtp.office365.com")
                 {
                     Port = 587,
