@@ -263,6 +263,20 @@ namespace Store.Controllers
             }
             else
             {
+                teenust tennust = _context.teenused.Find(bron.teenustId);
+                int hours_to_do = CheckHours(tennust);
+                foreach (var br in _context.bronid)
+                {
+                    if (bron.aeg.AddHours(hours_to_do) >= br.aeg)
+                    {
+                        ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
+                        ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
+                        ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
+                        ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
+                        return View(bron);
+                    }
+                }
+                
                 _context.Add(bron);
                 await _context.SaveChangesAsync();
                 bron newbron = new bron();
