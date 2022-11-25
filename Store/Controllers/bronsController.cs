@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 using EASendMail;
+using Ical.Net;
+using Ical.Net.CalendarComponents;
+using Ical.Net.DataTypes;
+using Ical.Net.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Store.Data;
 using Store.Models;
-using SmtpClient = EASendMail.SmtpClient;
+using Attachment = System.Net.Mail.Attachment;
+using MailAddress = System.Net.Mail.MailAddress;
+using SmtpClient = System.Net.Mail.SmtpClient;
 
 namespace Store.Controllers
 {
@@ -116,38 +124,90 @@ namespace Store.Controllers
                     }
                 }
             }
+            int hours_to_do=0;
+            if (tennust.nimetus == "soengkass"|| tennust.nimetus == "soengkoer")
+            {
+                hours_to_do = 2;
+            }
+            else if (tennust.nimetus == "küüniste lõikamine")
+            {
+                hours_to_do = 1;
+            }
+            else if (tennust.nimetus == "küüniste lõikamine")
+            {
+                hours_to_do = 1;
+            }
+            else if (tennust.nimetus == "korrastamine")
+            {
+                hours_to_do = 2;
+            }
+            else if (tennust.nimetus == "villa värvimine")
+            {
+                hours_to_do = 1;
+            }
+            else if (tennust.nimetus == "puntrate välja kammimine")
+            {
+                hours_to_do = 2;
+            }
+            else if (tennust.nimetus == "soengkass,küüniste lõikamine,puntrate välja kammimine")
+            {
+                hours_to_do = 5;
+            }
+            else if (tennust.nimetus == "soengkoer,küüniste lõikamine,puntrate välja kammimine")
+            {
+                hours_to_do = 5;
+            }
+            else if (tennust.nimetus == "soengkoer,küüniste lõikamine,puntrate välja kammimine")
+            {
+                hours_to_do = 5;
+            }
+            else if (tennust.nimetus == "täielik korrastamine")
+            {
+                hours_to_do = 3;
+            }
+            else if (tennust.nimetus == "SPA protseduurid")
+            {
+                hours_to_do = 3;
+            }
             MailRequest mailRequest = new MailRequest();
             mailRequest.ToEmail = klient.epost;
             mailRequest.Body = $"Sinu bronnerida aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\nTäname meie teenuste ostmise eest! Head päeva! \n\nⒸPetCare";
             mailRequest.Subject = "Broonerida teenust";
-            SmtpMail oMail = new SmtpMail("TryIt");
+            
+            var calendar = new Calendar();
 
-            // Your email address
-            oMail.From = "petcare_12@hotmail.com";
+            var icalEvent = new CalendarEvent
+            {
+                Class = "PUBLIC",
+                Summary = mailRequest.Subject,
+                Description = mailRequest.Body,
+                // 15th of march 2021 12 o'clock.
+                Start = new CalDateTime(bron.aeg),
+                End = new CalDateTime(bron.aeg.AddHours(hours_to_do)),
+                Created = new CalDateTime(DateTime.Now),
+            };
 
-            // Set recipient email address
-            oMail.To = mailRequest.ToEmail;
+            calendar.Events.Add(icalEvent);
 
-            // Set email subject
-            oMail.Subject = mailRequest.Subject;
+            var serializer = new CalendarSerializer(new SerializationContext());
+            var serializedCalendar = serializer.SerializeToString(calendar);
+            var bytesCalendar = Encoding.UTF8.GetBytes(serializedCalendar);
+            MemoryStream ms = new MemoryStream(bytesCalendar);
+            System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(ms, "bron.ics", "text/calendar");
+            MailMessage message = new MailMessage();
+            message.To.Add(mailRequest.ToEmail);
+            message.From = new MailAddress("petcare_12@hotmail.com", "Pet Care");
+            message.Subject = mailRequest.Subject;
+            message.Body = mailRequest.Body;
+            message.Attachments.Add(attachment);
+            var smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("petcare_12@hotmail.com", "Testcat__123"),
+                EnableSsl = true,
+            };
+            smtpClient.SendMailAsync(message);
 
-            // Set email body
-            oMail.TextBody = mailRequest.Body;
-
-            // Hotmail/Outlook SMTP server address
-            SmtpServer oServer = new SmtpServer("smtp.office365.com");
-
-            // If your account is office 365, please change to Office 365 SMTP server
-            // SmtpServer oServer = new SmtpServer("smtp.office365.com");
-
-            // User authentication should use your
-            // email address as the user name.
-            oServer.User = "petcare_12@hotmail.com";
-            oServer.Password = "Testcat__123";
-            oServer.Port = 587;
-            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-            SmtpClient oSmtp = new SmtpClient();
-            oSmtp.SendMail(oServer, oMail);
             ViewData["teenust"] = tennust.nimetus;
             ViewData["hind"] = tennust.hind;
             ViewData["teenindajaNimi"] = master.Nimi+" "+master.Perenimi;
@@ -281,36 +341,19 @@ namespace Store.Controllers
                 mailRequest.ToEmail = klient.epost;
                 mailRequest.Body = $"Sinu bronnerida aeg on:{bron.aeg} \nteenindaja: {master.Nimi} {master.Perenimi}\nteenindaja kontacktid:\n{master.epost} {master.telefon}\n teenust:{tennust.nimetus} hind: {tennust.hind} €\n Head päeva! \n\nⒸPetCare";
                 mailRequest.Subject = "Sinu Broonerida on muutatud";
-                SmtpMail oMail = new SmtpMail("TryIt");
-
-                // Your email address
-                oMail.From = "petcare_12@hotmail.com";
-            
-
-            // Set recipient email address
-            oMail.To = mailRequest.ToEmail;
-
-            // Set email subject
-            oMail.Subject = mailRequest.Subject;
-
-            // Set email body
-            oMail.TextBody = mailRequest.Body;
-
-            // Hotmail/Outlook SMTP server address
-            SmtpServer oServer = new SmtpServer("smtp.office365.com");
-
-            // If your account is office 365, please change to Office 365 SMTP server
-            // SmtpServer oServer = new SmtpServer("smtp.office365.com");
-
-            // User authentication should use your
-            // email address as the user name.
-            oServer.User = "petcare_12@hotmail.com";
-            oServer.Password = "Testcat__123";
-            oServer.Port = 587;
-            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-            SmtpClient oSmtp = new SmtpClient();
-            oSmtp.SendMail(oServer, oMail);
-            return RedirectToAction(nameof(Index));
+                MailMessage message = new MailMessage();
+                message.To.Add(mailRequest.ToEmail);
+                message.From = new MailAddress("petcare_12@hotmail.com", "Pet Care");
+                message.Subject = mailRequest.Subject;
+                message.Body = mailRequest.Body;
+                var smtpClient = new SmtpClient("smtp.office365.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("petcare_12@hotmail.com", "Testcat__123"),
+                    EnableSsl = true,
+                };
+                smtpClient.SendMailAsync(message);
+                return RedirectToAction(nameof(Index));
 
         }
 
@@ -371,34 +414,18 @@ namespace Store.Controllers
             mailRequest.ToEmail = klient.epost;
             mailRequest.Body = $"Sinu bronnerida aeg on kustatud\n Head päeva! \n\nⒸPetCare";
             mailRequest.Subject = "Sinu Broonerida on kustatud";
-            SmtpMail oMail = new SmtpMail("TryIt");
-
-            // Your email address
-            oMail.From = "petcare_12@hotmail.com";
-
-            // Set recipient email address
-            oMail.To = mailRequest.ToEmail;
-
-            // Set email subject
-            oMail.Subject = mailRequest.Subject;
-
-            // Set email body
-            oMail.TextBody = mailRequest.Body;
-
-            // Hotmail/Outlook SMTP server address
-            SmtpServer oServer = new SmtpServer("smtp.office365.com");
-
-            // If your account is office 365, please change to Office 365 SMTP server
-            // SmtpServer oServer = new SmtpServer("smtp.office365.com");
-
-            // User authentication should use your
-            // email address as the user name.
-            oServer.User = "petcare_12@hotmail.com";
-            oServer.Password = "Testcat__123";
-            oServer.Port = 587;
-            oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
-            SmtpClient oSmtp = new SmtpClient();
-            oSmtp.SendMail(oServer, oMail);
+            MailMessage message = new MailMessage();
+            message.To.Add(mailRequest.ToEmail);
+            message.From = new MailAddress("petcare_12@hotmail.com", "Pet Care");
+            message.Subject = mailRequest.Subject;
+            message.Body = mailRequest.Body;
+            var smtpClient = new SmtpClient("smtp.office365.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("petcare_12@hotmail.com", "Testcat__123"),
+                EnableSsl = true,
+            };
+            smtpClient.SendMailAsync(message);
             return RedirectToAction(nameof(Index));
         }
 

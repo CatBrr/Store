@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="EASendMail" Version="7.9.1" />
+    <PackageReference Include="Ical.Net" Version="4.2.0" />
     <PackageReference Include="MailKit" Version="3.4.2" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.9" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
