@@ -39,7 +39,7 @@ namespace Store.Controllers
             var applicationContext = _context.bronid.Include(b => b.klient).Include(b => b.loomad).Include(b => b.master).Include(b => b.teenused);
             return View(await applicationContext.ToListAsync());
         }
-        public async Task<IActionResult> Service(int? id)
+            public async Task<IActionResult> Service(int? id)
         {
             if (id == null || _context.bronid == null) { return NotFound(); };
 
@@ -54,9 +54,11 @@ namespace Store.Controllers
             loom loom = _context.loomad.Find(current_bron.loomId);
             Random rnd = new Random();
             int rndnum = rnd.Next(1, 2);
-            if (current_bron.teenustId==1)
+            rndnum = rnd.Next(1, 2);
+            rndnum = rnd.Next(1, 2);
+            if (current_bron.teenustId==2)
             {
-                ViewData["image2"] = "cut_dog.gif";
+                ViewData["image2"] = "cut_bog.gif";
             }
             else if (current_bron.teenustId == 1)
             {
@@ -93,51 +95,71 @@ namespace Store.Controllers
                 if (loom.iseloomuId ==6 && rndnum == 1)
                 {
                     ViewData["image"] = "dog_bad.gif";
+                    ViewData["Result"] = "Your pet was a really bad puppy:(";
+                    ViewData["hind"] = current_bron.teenused.hind+12;
                 }
                 else if (loom.iseloomuId == 6 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_dog.gif";
+                    ViewData["Result"] = "Your pet was pretty bad but we coped with it";
+                    ViewData["hind"] = current_bron.teenused.hind + 3;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_dog.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but we coped with it";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 2)
                 {
                     ViewData["image"] = "dog_bad.gif";
+                    ViewData["Result"] = "Your pet was really nervouse and hurt the master";
+                    ViewData["hind"] = current_bron.teenused.hind+10;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_dog.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but we coped with it";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 2)
                 {
                     ViewData["image"] = "dog_bad.gif";
+                    ViewData["Result"] = "Your pet was really nervouse but nothing happent";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_dog.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but then calm down";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 2)
                 {
                     ViewData["image"] = "good_puppy.gif";
+                    ViewData["Result"] = "Your pet was a good puppy:)";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 1)
                 {
                     ViewData["image"] = "good_puppy.gif";
+                    ViewData["Result"] = "Your pet was a good puppy:)";
+                    ViewData["hind"] = current_bron.teenused.hind;
+
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_dog.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but then calm down";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 1)
                 {
                     ViewData["image"] = "good_puppy.gif";
+                    ViewData["Result"] = "Your pet was a good puppy:)";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
-                if (loom.tervis <= 5 && rnd.Next(1, 3) == 3)
-                {
-                    ViewData["image"] = "furr_bugs.gif";
-                }
+                
 
             }
             else if (loom.tuupId == 1)
@@ -145,51 +167,75 @@ namespace Store.Controllers
                 if (loom.iseloomuId == 6 && rndnum == 1)
                 {
                     ViewData["image"] = "bad_cat.gif";
+                    ViewData["Result"] = "Your pet was a really bad kitty:(";
+                    ViewData["hind"] = current_bron.teenused.hind + 12;
                 }
                 else if (loom.iseloomuId == 6 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
+                    ViewData["Result"] = "Your pet was pretty agry but we coped with it";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but nothing happent";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 2)
                 {
                     ViewData["image"] = "bad_cat.gif";
+                    ViewData["Result"] = "Your pet was a really bad kitty:( and broke something in the salon";
+                    ViewData["hind"] = current_bron.teenused.hind + 10;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but then calm down";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 2)
                 {
                     ViewData["image"] = "bad_cat.gif";
+                    ViewData["Result"] = "Your pet was a really bad kitty:( and broke something in the salon";
+                    ViewData["hind"] = current_bron.teenused.hind + 10;
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 1)
                 {
-                    ViewData["image"] = "neutral_dog.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but it's coped with this!";
+                    ViewData["hind"] = current_bron.teenused.hind;
+                    ViewData["image"] = "neutral_kitty.gif";
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 2)
                 {
                     ViewData["image"] = "good_kitty.gif";
+                    ViewData["Result"] = "Your pet was a good kitty:)";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 1)
                 {
                     ViewData["image"] = "good_kitty.gif";
+                    ViewData["Result"] = "Your pet was a good kitty:)";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
+                    ViewData["Result"] = "Your pet was pretty nervouse but we coped with it";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 1)
                 {
                     ViewData["image"] = "good_kitty.gif";
+                    ViewData["Result"] = "Your pet was a good kitty:)";
+                    ViewData["hind"] = current_bron.teenused.hind;
                 }
-                if (loom.tervis <= 5 && rnd.Next(1, 3) == 3)
-                {
-                    ViewData["image"] = "furr_bugs.gif";
-                }
+            }
+            if (loom.tervis <= 5 && rnd.Next(1, 3) == 3)
+            {
+                ViewData["image"] = "furr_bugs.gif";
+                ViewData["Result"] = "Your pet had a fur bugs! Yor bron is canceled";
+                ViewData["hind"] = 0;
             }
             if (User.Identity?.Name == klient.epost)
             {
