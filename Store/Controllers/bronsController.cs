@@ -39,6 +39,167 @@ namespace Store.Controllers
             var applicationContext = _context.bronid.Include(b => b.klient).Include(b => b.loomad).Include(b => b.master).Include(b => b.teenused);
             return View(await applicationContext.ToListAsync());
         }
+        public async Task<IActionResult> Service(int? id)
+        {
+            if (id == null || _context.bronid == null) { return NotFound(); };
+
+            bron current_bron = await _context.bronid
+                .Include(b => b.klient)
+                .Include(b => b.loomad)
+                .Include(b => b.master)
+                .Include(b => b.teenused)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            master master = _context.teenindajad.Find(current_bron.masterId);
+            klient klient = _context.kliendit.Find(current_bron.klientId);
+            loom loom = _context.loomad.Find(current_bron.loomId);
+            Random rnd = new Random();
+            int rndnum = rnd.Next(1, 2);
+            if (current_bron.teenustId==1)
+            {
+                ViewData["image2"] = "cut_dog.gif";
+            }
+            else if (current_bron.teenustId == 1)
+            {
+                ViewData["image2"] = "cut_cat.gif";
+            }
+            else if (current_bron.teenustId == 3)
+            {
+                ViewData["image2"] = "cut_claws.gif";
+            }
+            else if (current_bron.teenustId == 10)
+            {
+                if (loom.tuupId == 2)
+                {
+                    ViewData["image2"] = "spa_dog.gif";
+                }
+                else if (loom.tuupId == 1)
+                {
+                    ViewData["image2"] = "cat_spa.gif";
+                }
+            }
+            else
+            {
+                if (loom.tuupId == 2)
+                {
+                    ViewData["image2"] = "cleaning_dog.gif";
+                }
+                else if (loom.tuupId == 1)
+                {
+                    ViewData["image2"] = "cleaning_cat.gif";
+                }
+            }
+            if (loom.tuupId==2)
+            {
+                if (loom.iseloomuId ==6 && rndnum == 1)
+                {
+                    ViewData["image"] = "dog_bad.gif";
+                }
+                else if (loom.iseloomuId == 6 && rndnum == 2)
+                {
+                    ViewData["image"] = "neutral_dog.gif";
+                }
+                else if (loom.iseloomuId == 5 && rndnum == 1)
+                {
+                    ViewData["image"] = "neutral_dog.gif";
+                }
+                else if (loom.iseloomuId == 5 && rndnum == 2)
+                {
+                    ViewData["image"] = "dog_bad.gif";
+                }
+                else if (loom.iseloomuId == 4 && rndnum == 1)
+                {
+                    ViewData["image"] = "neutral_dog.gif";
+                }
+                else if (loom.iseloomuId == 4 && rndnum == 2)
+                {
+                    ViewData["image"] = "dog_bad.gif";
+                }
+                else if (loom.iseloomuId == 3 && rndnum == 1)
+                {
+                    ViewData["image"] = "neutral_dog.gif";
+                }
+                else if (loom.iseloomuId == 3 && rndnum == 2)
+                {
+                    ViewData["image"] = "good_puppy.gif";
+                }
+                else if (loom.iseloomuId == 2 && rndnum == 1)
+                {
+                    ViewData["image"] = "good_puppy.gif";
+                }
+                else if (loom.iseloomuId == 2 && rndnum == 2)
+                {
+                    ViewData["image"] = "neutral_dog.gif";
+                }
+                else if (loom.iseloomuId == 1)
+                {
+                    ViewData["image"] = "good_puppy.gif";
+                }
+                if (loom.tervis <= 5 && rnd.Next(1, 3) == 3)
+                {
+                    ViewData["image"] = "furr_bugs.gif";
+                }
+
+            }
+            else if (loom.tuupId == 1)
+            {
+                if (loom.iseloomuId == 6 && rndnum == 1)
+                {
+                    ViewData["image"] = "bad_cat.gif";
+                }
+                else if (loom.iseloomuId == 6 && rndnum == 2)
+                {
+                    ViewData["image"] = "neutral_kitty.gif";
+                }
+                else if (loom.iseloomuId == 5 && rndnum == 1)
+                {
+                    ViewData["image"] = "neutral_kitty.gif";
+                }
+                else if (loom.iseloomuId == 5 && rndnum == 2)
+                {
+                    ViewData["image"] = "bad_cat.gif";
+                }
+                else if (loom.iseloomuId == 4 && rndnum == 1)
+                {
+                    ViewData["image"] = "neutral_kitty.gif";
+                }
+                else if (loom.iseloomuId == 4 && rndnum == 2)
+                {
+                    ViewData["image"] = "bad_cat.gif";
+                }
+                else if (loom.iseloomuId == 3 && rndnum == 1)
+                {
+                    ViewData["image"] = "neutral_dog.gif";
+                }
+                else if (loom.iseloomuId == 3 && rndnum == 2)
+                {
+                    ViewData["image"] = "good_kitty.gif";
+                }
+                else if (loom.iseloomuId == 2 && rndnum == 1)
+                {
+                    ViewData["image"] = "good_kitty.gif";
+                }
+                else if (loom.iseloomuId == 2 && rndnum == 2)
+                {
+                    ViewData["image"] = "neutral_kitty.gif";
+                }
+                else if (loom.iseloomuId == 1)
+                {
+                    ViewData["image"] = "good_kitty.gif";
+                }
+                if (loom.tervis <= 5 && rnd.Next(1, 3) == 3)
+                {
+                    ViewData["image"] = "furr_bugs.gif";
+                }
+            }
+            if (User.Identity?.Name == klient.epost)
+            {
+                return View(current_bron);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
         // GET: brons/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -267,7 +428,7 @@ namespace Store.Controllers
                 int hours_to_do = CheckHours(tennust);
                 foreach (var br in _context.bronid)
                 {
-                    if (bron.aeg.AddHours(hours_to_do) >= br.aeg)
+                    if (bron.aeg.AddHours(hours_to_do) == br.aeg)
                     {
                         ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
                         ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
@@ -275,7 +436,7 @@ namespace Store.Controllers
                         ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
                         return View(bron);
                     }
-                }
+                }     
                 
                 _context.Add(bron);
                 await _context.SaveChangesAsync();
