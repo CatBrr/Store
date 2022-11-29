@@ -49,6 +49,10 @@ namespace Store.Controllers
                 .Include(b => b.master)
                 .Include(b => b.teenused)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            if (current_bron.aeg.Date!=DateTime.Now && current_bron.aeg.Hour != DateTime.Now.Hour)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             master master = _context.teenindajad.Find(current_bron.masterId);
             klient klient = _context.kliendit.Find(current_bron.klientId);
             loom loom = _context.loomad.Find(current_bron.loomId);
