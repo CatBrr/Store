@@ -58,15 +58,15 @@ namespace Store.Controllers
             loom loom = _context.loomad.Find(current_bron.loomId);
             Random rnd = new Random();
             int rndnum = rnd.Next(1, 2);
-            rndnum = rnd.Next(1, 2);
-            rndnum = rnd.Next(1, 2);
+            rndnum = rnd.Next(1, 3);
+            rndnum = rnd.Next(1, 3);
             if (current_bron.teenustId==2)
             {
-                ViewData["image2"] = "cut_bog.gif";
+                ViewData["image2"] = "cut_cat.gif";
             }
             else if (current_bron.teenustId == 1)
             {
-                ViewData["image2"] = "cut_cat.gif";
+                ViewData["image2"] = "cut_bog.gif";
             }
             else if (current_bron.teenustId == 3)
             {
@@ -99,25 +99,25 @@ namespace Store.Controllers
                 if (loom.iseloomuId ==6 && rndnum == 1)
                 {
                     ViewData["image"] = "dog_bad.gif";
-                    ViewData["Result"] = "Your pet was a really bad puppy:(";
+                    ViewData["Result"] = "Sinu lemmikloom oli väga halb kutsikas:(";
                     ViewData["hind"] = current_bron.teenused.hind+12;
                 }
                 else if (loom.iseloomuId == 6 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_dog.gif";
-                    ViewData["Result"] = "Your pet was pretty bad but we coped with it";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna halb, kuid saime sellega hakkama";
                     ViewData["hind"] = current_bron.teenused.hind + 3;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_dog.gif";
-                    ViewData["Result"] = "Your pet was pretty nervouse but we coped with it";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid saime sellega hakkama";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 2)
                 {
                     ViewData["image"] = "dog_bad.gif";
-                    ViewData["Result"] = "Your pet was really nervouse and hurt the master";
+                    ViewData["Result"] = "Teie lemmikloom oli väga närvis ja tegi peremehele haiget";
                     ViewData["hind"] = current_bron.teenused.hind+10;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 1)
@@ -129,38 +129,38 @@ namespace Store.Controllers
                 else if (loom.iseloomuId == 4 && rndnum == 2)
                 {
                     ViewData["image"] = "dog_bad.gif";
-                    ViewData["Result"] = "Your pet was really nervouse but nothing happent";
+                    ViewData["Result"] = "Teie lemmikloom oli tõesti närvis, kuid midagi ei juhtu";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_dog.gif";
-                    ViewData["Result"] = "Your pet was pretty nervouse but then calm down";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid rahunege siis maha";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 2)
                 {
                     ViewData["image"] = "good_puppy.gif";
-                    ViewData["Result"] = "Your pet was a good puppy:)";
+                    ViewData["Result"] = "Sinu lemmikloom oli hea kutsikas :)";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 1)
                 {
                     ViewData["image"] = "good_puppy.gif";
-                    ViewData["Result"] = "Your pet was a good puppy:)";
+                    ViewData["Result"] = "Sinu lemmikloom oli hea kutsikas :)";
                     ViewData["hind"] = current_bron.teenused.hind;
 
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_dog.gif";
-                    ViewData["Result"] = "Your pet was pretty nervouse but then calm down";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid rahunege siis maha";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 1)
                 {
                     ViewData["image"] = "good_puppy.gif";
-                    ViewData["Result"] = "Your pet was a good puppy:)";
+                    ViewData["Result"] = "Sinu lemmikloom oli hea kutsikas :)";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 
@@ -171,74 +171,74 @@ namespace Store.Controllers
                 if (loom.iseloomuId == 6 && rndnum == 1)
                 {
                     ViewData["image"] = "bad_cat.gif";
-                    ViewData["Result"] = "Your pet was a really bad kitty:(";
+                    ViewData["Result"] = "Su lemmikloom oli väga halb kiisu:(";
                     ViewData["hind"] = current_bron.teenused.hind + 12;
                 }
                 else if (loom.iseloomuId == 6 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
-                    ViewData["Result"] = "Your pet was pretty agry but we coped with it";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna vihane, kuid saime sellega hakkama";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
-                    ViewData["Result"] = "Your pet was pretty nervouse but nothing happent";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid midagi ei juhtu";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 5 && rndnum == 2)
                 {
                     ViewData["image"] = "bad_cat.gif";
-                    ViewData["Result"] = "Your pet was a really bad kitty:( and broke something in the salon";
+                    ViewData["Result"] = "Sinu lemmikloom oli väga halb kiisu:( ja lõhkus midagi salongis";
                     ViewData["hind"] = current_bron.teenused.hind + 10;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 1)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
-                    ViewData["Result"] = "Your pet was pretty nervouse but then calm down";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid rahunege siis maha";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 4 && rndnum == 2)
                 {
                     ViewData["image"] = "bad_cat.gif";
-                    ViewData["Result"] = "Your pet was a really bad kitty:( and broke something in the salon";
+                    ViewData["Result"] = "Sinu lemmikloom oli väga halb kiisu:( ja lõhkus midagi salongis";
                     ViewData["hind"] = current_bron.teenused.hind + 10;
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 1)
                 {
-                    ViewData["Result"] = "Your pet was pretty nervouse but it's coped with this!";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid ta sai sellega hakkama!";
                     ViewData["hind"] = current_bron.teenused.hind;
                     ViewData["image"] = "neutral_kitty.gif";
                 }
                 else if (loom.iseloomuId == 3 && rndnum == 2)
                 {
                     ViewData["image"] = "good_kitty.gif";
-                    ViewData["Result"] = "Your pet was a good kitty:)";
+                    ViewData["Result"] = "Su lemmikloom oli tubli kiisu :)";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 1)
                 {
                     ViewData["image"] = "good_kitty.gif";
-                    ViewData["Result"] = "Your pet was a good kitty:)";
+                    ViewData["Result"] = "Su lemmikloom oli tubli kiisu :)";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 2 && rndnum == 2)
                 {
                     ViewData["image"] = "neutral_kitty.gif";
-                    ViewData["Result"] = "Your pet was pretty nervouse but we coped with it";
+                    ViewData["Result"] = "Teie lemmikloom oli üsna närvis, kuid saime sellega hakkama";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
                 else if (loom.iseloomuId == 1)
                 {
                     ViewData["image"] = "good_kitty.gif";
-                    ViewData["Result"] = "Your pet was a good kitty:)";
+                    ViewData["Result"] = "Su lemmikloom oli tubli kiisu :)";
                     ViewData["hind"] = current_bron.teenused.hind;
                 }
             }
-            if (loom.tervis <= 5 && rnd.Next(1, 3) == 3)
+            if (loom.tervis <= 5 && rnd.Next(1, 4) == 3)
             {
                 ViewData["image"] = "furr_bugs.gif";
-                ViewData["Result"] = "Your pet had a fur bugs! Yor bron is canceled";
+                ViewData["Result"] = "Teie lemmikloomal on kirbud! Teie broneering on tühistatud";
                 ViewData["hind"] = 0;
             }
             if (User.Identity?.Name == klient.epost)
