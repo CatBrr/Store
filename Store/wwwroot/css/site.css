@@ -1,3 +1,121 @@
+.image {
+    /* the magic */
+    display: block;
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+    -webkit-border-radius: 180px;
+    -moz-border-radius: 180px;
+    -ms-border-radius: 180px;
+    -o-border-radius: 180px;
+    border-radius: 180px;
+    /* the rest */
+    position: relative; /* for the overlay later */
+    margin: 0px auto;
+    text-align: center;
+    margin-bottom: 10px;
+    border: 3px solid #FFF;
+    -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3),inset 0px 3px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 1px 2px rgba(0,0,0,0.3),inset 0px 3px 8px rgba(0,0,0,0.3);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3),inset 0px 3px 8px rgba(0, 0, 0, 0.3);
+}
+    /* here's a hover overlay, in case you want that */
+    .image span {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #888;
+        background: rgba(0,0,0,.5);
+        color: #fff;
+        padding: 3em 1em 0;
+    }
+    .image:hover span {
+        display: block;
+    }
+.ticker-container .ticker-tape {
+    height: auto;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+    .ticker-container .ticker-tape:before, .ticker-container .ticker-tape:after {
+        background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+        content: "";
+        height: 100px;
+        position: absolute;
+        width: 200px;
+        z-index: 2;
+    }
+    .ticker-container .ticker-tape:after {
+        right: 0;
+        top: 0;
+        transform: rotateZ(180deg);
+    }
+
+    .ticker-container .ticker-tape:before {
+        left: 0;
+        top: 0;
+    }
+.ticker-container .slide-track {
+    -webkit-animation: scroll 40s linear infinite;
+    animation: scroll 40s linear infinite;
+    display: flex;
+    width: calc(250px * 14);
+}
+.ticker-container div.slide {
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/* Animation */
+@-webkit-keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-250px * 7));
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-250px * 7));
+    }
+}
+.card {
+    background: #e5f5f5;
+    padding: 3px;
+    position: relative;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.0em;
+    color: #2a5e6f;
+    cursor: pointer;
+    color: #2a5e6f;
+    margin: 10px auto;
+}
+    .card:hover {
+      color: #7ac3d2;
+      transition: color 1s;
+    }
+        .card:hover:before, .card:hover:after {
+            color: #2a5e6f;
+            animation: color 1s;
+            opacity: 0;
+        }
 html {
   font-size: 14px;
 }

@@ -478,7 +478,7 @@ namespace Store.Controllers
                 int hours_to_do = CheckHours(tennust);
                 foreach (var br in _context.bronid)
                 {
-                    if (bron.aeg.AddHours(hours_to_do) == br.aeg)
+                    if (bron.aeg >= br.aeg && bron.aeg.AddHours(hours_to_do) <= br.aeg && bron.masterId==br.masterId)
                     {
                         ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
                         ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
