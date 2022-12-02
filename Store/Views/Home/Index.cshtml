@@ -1,9 +1,17 @@
-﻿@{
+﻿
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Avaleht";
 }
 <div class="text-center" id="title">
     <h1 class="display-4">Tere tulemast PetCare</h1>
     <h2>Meie salongis</h2>
     <p class="card">Usaldades oma lemmiklooma meile, võid olla täiesti kindel, et saad ta tagasi stiilse, särava ja õnnelikuna!</p>
-
+     @{
+         if(){
+            <p>esmalt registreeruge loom ja  kliendiks</p>
+         }
+     }
 </div>
