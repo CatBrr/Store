@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Store.Data;
 using Store.Models;
+using static Humanizer.In;
 using Attachment = System.Net.Mail.Attachment;
 using MailAddress = System.Net.Mail.MailAddress;
 using SmtpClient = System.Net.Mail.SmtpClient;
@@ -439,14 +440,25 @@ namespace Store.Controllers
             
         }
             // GET: brons/Create
-            public IActionResult Create()
-        {
-            ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
-            ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
-            ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
-            ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
-            return View();
-        }
+            public IActionResult Create(int? id)
+            {
+            if (id!=null)
+            {
+                teenust ten = _context.teenused.Find(id);
+                ViewData["teenust"] = ten.nimetus;
+                ViewData["id"] = ten.Id;
+            }
+            else
+            {
+                ViewData["id"] = "";
+                ViewData["teenust"] = "select a teenust";
+            }
+                ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
+                ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
+                ViewData["masterId"] = new SelectList(_context.teenindajad, "Id", "Nimi");
+                ViewData["teenustId"] = new SelectList(_context.teenused, "Id", "nimetus");
+                return View();
+            }
 
         // POST: brons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.

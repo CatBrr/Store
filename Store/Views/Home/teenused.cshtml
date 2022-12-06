@@ -1,5 +1,24 @@
-﻿@{
+﻿@using Store.Models;
+@using Store.Data;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Teenused";
+    klient klientCurrent=null;
+    if (SignInManager.IsSignedIn(User))
+    {
+        using (ApplicationContext db = new ApplicationContext())
+        {
+            foreach (klient klient in db.kliendit)
+            {
+                if (User.Identity?.Name == klient.epost)
+                {
+                    klientCurrent = klient;
+                }
+            }
+        }
+    }
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -10,15 +29,49 @@
             <td >
                 <h3>spa-protseduurid</h3>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/relaxed.png">
-                        <img class="image" alt="dog spa" src="~/css/img/relaxed.png" />
-                    </a>
+                    @{
+                        if (!SignInManager.IsSignedIn(User))
+                        {
+                                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                                <img class="image" alt="dog spa" src="~/css/img/relaxed.png" />
+                                            </a>
+                        }
+                        else if (klientCurrent == null)
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="dog spa" src="~/css/img/relaxed.png" />
+                            </a>
+                        }
+                        else{
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="10">
+                                                <img class="image" alt="dog spa" src="~/css/img/relaxed.png" />
+                                            </a>
+                        }
+                    }
                     <div class="desc"><p class="card">spa-protseduurid - 35€</p></div>
                 </div>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/spacat.png">
-                        <img class="image" alt="cat spa" src="~/css/img/spacat.png" />
-                    </a>
+                    @{
+                        if (!SignInManager.IsSignedIn(User))
+                        {
+                                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                                <img class="image" alt="cat spa" src="~/css/img/spacat.png" />
+                                            </a>
+                        }
+                        else if (klientCurrent == null)
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="cat spa" src="~/css/img/spacat.png" />
+                            </a>
+                        }
+                        else
+                        {
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="10">
+                                                <img class="image" alt="cat spa" src="~/css/img/spacat.png" />
+                                            </a>
+                        }
+                    }
+                    
                     <div class="desc"><p class="card">spa-protseduurid - 35€</p></div>
                 </div>
             </td>
@@ -29,25 +82,77 @@
             <td >
                 <h3> korrastamine, küünte lõikamine, puntra kammimine</h3>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/clean.png">
-                        <img class="image" alt="clean puppy" src="~/css/img/clean.png" />
-                    </a>
+                    @{
+                        if (!SignInManager.IsSignedIn(User))
+                        {
+                                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                                <img class="image" alt="clean puppy" src="~/css/img/clean.png" />
+                                            </a>
+                        }
+                        else if (klientCurrent == null)
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="clean puppy" src="~/css/img/clean.png" />
+                            </a>
+                        }
+                        else
+                        {
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="4">
+                                                <img class="image" alt="clean puppy" src="~/css/img/clean.png" />
+                                            </a>
+                        }
+                    }
                     <div class="desc">
                         <p class="card">korrastamine - 13€</p>
                     </div>
                 </div>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/claws.png">
-                        <img class="image" alt="noo my claws" src="~/css/img/claws.png" />
-                    </a>
+                    @{
+                    if (!SignInManager.IsSignedIn(User))
+                    {
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                        <img class="image" alt="noo my claws" src="~/css/img/claws.png" />
+                                    </a>
+                    }
+                        else if (klientCurrent == null)
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="noo my claws" src="~/css/img/claws.png" />
+                            </a>
+                        }
+                    else
+                    {
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="3">
+                                        <img class="image" alt="noo my claws" src="~/css/img/claws.png" />
+                                    </a>
+                    }
+                     }
                     <div class="desc">
-                        <p class="card"> puntrate välja kammimine - 10€ </p>
+                        <p class="card">küüniste lõikamine - 9€ </p>
                     </div>
                 </div>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/please_no.png">
-                        <img class="image" alt="no.." src="~/css/img/please_no.png" />
-                    </a>
+                     @{
+                    if (!SignInManager.IsSignedIn(User))
+                    {
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                    <img class="image" alt="no.." src="~/css/img/please_no.png" />
+                                </a>
+                    }
+                        else if (klientCurrent == null)
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="no.." src="~/css/img/please_no.png" />
+                            </a>
+                        }
+                    else
+                    {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="5">
+                                    <img class="image" alt="no.." src="~/css/img/please_no.png" />
+                                </a>
+                    }
+                    }
+                    
                     <div class="desc">
                         <p class="card">puntrate välja kammimine - 10€</p>
                     </div>
@@ -59,17 +164,53 @@
             <td>
                 <h3> koer soeng, kass soeng</h3>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/haircut.png">
-                        <img class="image" alt="silly dog" src="~/css/img/haircut.png" />
-                    </a>
+                     @{
+                    if (!SignInManager.IsSignedIn(User))
+                    {
+                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                                <img class="image" alt="silly dog" src="~/css/img/haircut.png" />
+                            </a>
+                    }
+                        else if (klientCurrent == null)
+                        {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="silly dog" src="~/css/img/haircut.png" />
+                            </a>
+                        }
+                    else
+                    {
+                            <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="2">
+                                <img class="image" alt="silly dog" src="~/css/img/haircut.png" />
+                            </a>
+                    }
+                    }
+                    
                     <div class="desc">
                         <p class="card"> koersoeng - 10€</p>
                     </div>
                 </div>
                 <div class="gallery">
-                    <a target="_blank" href="~/css/img/haicutcat.png">
-                        <img class="image" alt="silly cat" src="~/css/img/haicutcat.png" />
-                    </a>
+                     @{
+                    if (!SignInManager.IsSignedIn(User))
+                    {
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">
+                            <img class="image" alt="silly cat" src="~/css/img/haicutcat.png" />
+                        </a>
+                    }
+                    else if(klientCurrent==null){
+                            <a class="nav-link text-dark" asp-area="" asp-controller="klients" asp-action="Create">
+                                <img class="image" alt="silly cat" src="~/css/img/haicutcat.png" />
+                            </a>
+                    }
+                    else
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="brons" asp-action="Create" asp-route-id="1">
+                            <img class="image" alt="silly cat" src="~/css/img/haicutcat.png" />
+                        </a>
+                    }
+                    }
+
+                    
                     <div class="desc">
                         <p class="card">kasssoeng - 11€ </p>
                     </div>
