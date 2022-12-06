@@ -71,7 +71,7 @@ namespace Store.Controllers
                     kl = kli;
                 }
             }
-            if (kl.loomId != id || kl == null)
+            if (kl == null || kl.loomId != id)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -141,7 +141,7 @@ namespace Store.Controllers
                     kl = kli;
                 }
             }
-            if (kl.loomId != id || kl==null)
+            if (kl == null  || kl.loomId != id)
             {
                 return RedirectToAction(nameof(Index));
             }

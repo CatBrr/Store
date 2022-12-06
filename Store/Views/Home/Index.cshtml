@@ -1,4 +1,5 @@
-﻿
+﻿@using Store.Models;
+@using Store.Data;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
@@ -9,9 +10,38 @@
     <h1 class="display-4">Tere tulemast PetCare</h1>
     <h2>Meie salongis</h2>
     <p class="card">Usaldades oma lemmiklooma meile, võid olla täiesti kindel, et saad ta tagasi stiilse, särava ja õnnelikuna!</p>
-     @{
-         if(){
-            <p>esmalt registreeruge loom ja  kliendiks</p>
-         }
+    @{
+        if (SignInManager.IsSignedIn(User))
+        {
+            klient currentklient = null;
+            master currentmaster = null;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                foreach(klient kl in db.kliendit){
+                    if (User.Identity?.Name == kl.epost)
+                    {
+                        currentklient = kl;
+                    }
+                    
+                }
+                foreach (master kl in db.teenindajad)
+                {
+                    if (User.Identity?.Name == kl.epost)
+                    {
+                        currentmaster = kl;
+                    }
+
+                }
+                if (currentklient == null && currentmaster == null)
+                {
+                    <p>esmalt registreeruge loom ja  kliendiks</p>
+                }
+                
+            }
+        }
+        else{
+            <p>Palun logi sisse või registreri uus konto</p>
+        }
      }
+     <img src="~/css/img/spa_dog.gif"/>
 </div>

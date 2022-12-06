@@ -278,6 +278,7 @@ namespace Store.Controllers
             ViewData["suurus"] = loom.suurus+" kg";
             ViewData["tervis"] = loom.tervis + "/10";
             ViewData["vanus"] = loom.vanus + " aastat vana";
+            ViewData["master"] = master.Nimi + " " + master.Perenimi;
             ViewData["klient"] = klient.Nimi + " " + klient.Perenimi;
             ViewData["epost"] = klient.epost;
 
@@ -478,7 +479,7 @@ namespace Store.Controllers
                 int hours_to_do = CheckHours(tennust);
                 foreach (var br in _context.bronid)
                 {
-                    if (bron.aeg >= br.aeg && bron.aeg.AddHours(hours_to_do) <= br.aeg && bron.masterId==br.masterId)
+                    if (bron.aeg.AddHours(hours_to_do) == br.aeg && bron.masterId==br.masterId )
                     {
                         ViewData["klientId"] = new SelectList(_context.kliendit, "Id", "Nimi");
                         ViewData["loomId"] = new SelectList(_context.loomad, "Id", "Nimi");
@@ -578,7 +579,7 @@ namespace Store.Controllers
                 var icalEvent = new CalendarEvent
                 {
                     Class = "PUBLIC",
-                    Summary = mailRequest.Subject,
+                    Summary = "Broneerida teenust",
                     Description = mailRequest.Body,
                     // 15th of march 2021 12 o'clock.
                     Start = new CalDateTime(bron.aeg),
